@@ -27,6 +27,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'feed'
+LOGOUT_REDIRECT_URL = 'frontpage'
+
 
 # Application definition
 
@@ -38,7 +42,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'apps.core',
+    'apps.core.apps.CoreConfig',
+    'apps.feed.apps.FeedConfig',
+    'apps.notification.apps.NotificationConfig',
 ]
 
 MIDDLEWARE = [
