@@ -29,7 +29,7 @@
                 <hr>
 
                 <div class="search-results">
-                    {% if not oinkers and not oinks %}
+                    {% if not oinkers and not posts %}
                         <p>No results, please try a different search term..</p>
                     {% endif %}
                     
@@ -37,21 +37,21 @@
                         <strong>Oinkers</strong>
 
                         {% for oinker in oinkers %}
-                            <p><a href="{% url 'oinkerprofile' oinker.username %}">{{ oinker.username }}</a></p>
+                            <p><a href="{% url 'userprofile' oinker.username %}">{{ oinker.username }}</a></p>
                         {% endfor %}
                     {% endif %}
 
-                    {% if oinks %}
-                        <strong>Oinks</strong>
+                    {% if posts %}
+                        <strong>Posts</strong>
 
                         <div class="wrapper-oinks">
-                            {% for oink in oinks %}
+                            {% for post in posts %}
                             <div class="oink">
                                 <article class="media">
                                     <figure class="media-left">
                                         <p class="image is-64x64">
-                                            {% if oink.created_by.oinkerprofile.avatar %}
-                                                <img src="{{ oink.created_by.oinkerprofile.avatar.url }}">
+                                            {% if post.created_by.userprofile.avatar %}
+                                                <img src="{{ post.created_by.userprofile.avatar.url }}">
                                             {% endif %}
                                         </p>
                                     </figure>
@@ -59,10 +59,10 @@
                                     <div class="media-content">
                                         <div class="content">
                                             <p>
-                                                <strong><a href="{% url 'oinkerprofile' oink.created_by.username %}">{{ oink.created_by.username }}</a></strong>
-                                                <small>{{ oink.created_at|naturaltime }}</small>
+                                                <strong><a href="{% url 'userprofile' post.created_by.username %}">{{ post.created_by.username }}</a></strong>
+                                                <small>{{ post.created_at|naturaltime }}</small>
                                                 <br>
-                                                {{ oink.body }}
+                                                {{ post.body }}
                                             </p>
                                         </div>
                                     </div>

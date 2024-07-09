@@ -51,7 +51,7 @@
                                 <figure class="media-left">
                                     <p class="image is-64x64">
                                         {% if post.created_by.usersprofile.avatar %}
-                                            <img src="{{ oink.created_by.oinkerprofile.avatar.url }}">
+                                            <img src="{{ post.created_by.userprofile.avatar.url }}">
                                         {% endif %}
                                     </p>
                                 </figure>
@@ -59,13 +59,13 @@
                                 <div class="media-content">
                                     <div class="content">
                                         <p>
-                                            <strong><a href="{% url 'oinkerprofile' oink.created_by.username %}">{{ post.created_by.username }}</a></strong>
+                                            <strong><a href="{% url 'userprofile' post.created_by.username %}">{{ post.created_by.username }}</a></strong>
                                             <small>{{ post.created_at|naturaltime }}</small>
                                             <br>
                                             {{ post.body }}
                                             <br>
-                                            <a @click="likeOink({{ like.id}})" v-if="!liked_oinks.includes({{ like.id }})">Like</a>
-                                            <span v-if="liked_oinks.includes({{ like.id }})">Liked</span>
+                                            <a @click="likePost({{ like.id}})" v-if="!liked_posts.includes({{ like.id }})">Like</a>
+                                            <span v-if="liked_posts.includes({{ like.id }})">Liked</span>
                                             <small id="likes-{{ like.id }}">{{ post.likes.count }} likes</small>
                                         </p>
                                     </div>
@@ -90,16 +90,16 @@
                 body: '',
                 oinker: '{{ request.user.username }}',
                 created_at: 'Now',
-                avatar: '{% if request.user.oinkerprofile.avatar %}{{ request.user.oinkerprofile.avatar.url }}{% endif %}',
-                liked_oinks: [{% for oink in oinks %}{% if oink.liked %}{{ oink.id }},{% endif %}{% endfor %}]
+                avatar: '{% if request.user.userprofile.avatar %}{{ request.user.userprofile.avatar.url }}{% endif %}',
+                liked_oinks: [{% for post in posts %}{% if post.liked %}{{ oink.id }},{% endif %}{% endfor %}]
             }
         },
         methods: {
-            likeOink(oink_id) {
-                this.liked_oinks.push(parseInt(oink_id));
+            likePost(post_id) {
+                this.liked_posts.push(parseInt(post_id));
 
-                var oink = {
-                    'oink_id': oink_id
+                var post = {
+                    'post_id': post_id
                 };
 
                 fetch('/api/add_like/', {
@@ -109,7 +109,7 @@
                         'X-CSRFToken': '{{ csrf_token }}'
                     },
                     credentials: 'same-origin',
-                    body: JSON.stringify(oink)
+                    body: JSON.stringify(post)
                 })
                 .then((response) => {
                     console.log(response);
@@ -118,17 +118,17 @@
                     console.log(error);
                 });
 
-                const el = document.getElementById('likes-' + oink_id);
+                const el = document.getElementById('likes-' + post_id);
                 const likes = parseInt(el.innerHTML.split(' ')[0] + 1);
                 el.innerHTML = likes + ' likes';  
             },
-            submitOink() {
-                console.log('submitOink');
+            submitPost() {
+                console.log('submitPost');
 
                 if (this.body.length > 0) {
                     var oink = {
                         'body': this.body,
-                        'oinker': this.oinker,
+                        'user': this.user,
                         'created_at': this.created_at,
                         'avatar': this.avatar
                     };
@@ -144,7 +144,7 @@
                             'X-CSRFToken': '{{ csrf_token }}'
                         },
                         credentials: 'same-origin',
-                        body: JSON.stringify(oink)
+                        body: JSON.stringify(post)
                     })
                     .then((response) => {
                         console.log(response);

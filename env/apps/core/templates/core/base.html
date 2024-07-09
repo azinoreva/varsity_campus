@@ -9,7 +9,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <!-- Title -->
-        <title>OinkOink</title>
+        <title>varsity campus</title>
 
         <!-- Styles -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
@@ -20,7 +20,7 @@
         <!-- Nav -->
         <nav class="navbar is-info" role="navigation">
             <div class="navbar-brand">
-                <a href="/" class="navbar-item"><strong>OinkOink</strong></a>
+                <a href="/" class="navbar-item"><strong>VarsityCampus</strong></a>
 
                 <a class="navbar-burger">
                     <span aria-hidden="true"></span>
@@ -50,7 +50,7 @@
                         <a href="{% url 'notifications' %}" class="navbar-item">Notifications ({{ notifications.count }})</a>
                         <a href="{% url 'feed' %}" class="navbar-item">Feed</a>
                         <a href="{% url 'conversations' %}" class="navbar-item">Conversations</a>
-                        <a href="{% url 'oinkerprofile' request.user.username %}" class="navbar-item">Profile</a>
+                        <a href="{% url 'userprofile' request.user.username %}" class="navbar-item">Profile</a>
                         <a href="{% url 'edit_profile' %}" class="navbar-item">Edit profile</a>
                     {% endif %}
 

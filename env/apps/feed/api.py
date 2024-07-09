@@ -10,7 +10,7 @@ from apps.notification.utilities import create_notification
 from .models import BusinessMessage, Like
 
 @login_required
-def api_add_oink(request):
+def api_add_post(request):
     data = json.loads(request.body)
     body = data['body']
 
