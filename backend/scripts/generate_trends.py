@@ -8,7 +8,7 @@ from django.utils import timezone
 
 
 sys.path.append(os.path.join(os.path.abspath(os.path.dirname(__file__)), '..'))
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "wey_backend.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "backend.settings")
 django.setup()
 
 
