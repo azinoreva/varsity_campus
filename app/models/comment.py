@@ -1,0 +1,1 @@
+"""Comment model for posts"""

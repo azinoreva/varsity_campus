@@ -1,0 +1,1 @@
+"""Message model for communication"""
