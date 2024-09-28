@@ -1,0 +1,8 @@
+modules = ["python-3.12"]
+run = "python run.py"
+
+[nix]
+channel = "stable-24_05"
+
+[deployment]
+run = ["sh", "-c", "python run.py"]

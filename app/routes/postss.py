@@ -1,0 +1,65 @@
+from flask import render_template, redirect, url_for, request, flash
+from flask_login import login_required, current_user
+from .. import db
+from .models import Post, Like, Comment, Repost
+
+# Create a new post
+@app.route('/post/create', methods=['GET', 'POST'])
+@login_required
+def create_post():
+    if request.method == 'POST':
+        text = request.form.get('text')
+        image = request.files.get('image')  # Handle image uploads
+        if len(text) > 2000:
+            flash('Text exceeds the 2000-character limit.')
+            return redirect(url_for('create_post'))
+
+        # Save image and create post
+        image_path = None
+        if image:
+            image_path = save_image(image)  # Function to save the image file
+
+        post = Post(text=text, image=image_path, user_id=current_user.id)
+        post.save_post()
+        return redirect(url_for('home'))
+
+    return render_template('create_post.html')
+
+# Like a post
+@app.route('/post/<int:post_id>/like', methods=['POST'])
+@login_required
+def like_post(post_id):
+    post = Post.query.get_or_404(post_id)
+    like = Like(user_id=current_user.id, post_id=post_id)
+    db.session.add(like)
+    db.session.commit()
+    return redirect(url_for('view_post', post_id=post_id))
+
+# View a post
+@app.route('/post/<int:post_id>', methods=['GET'])
+def view_post(post_id):
+    post = Post.query.get_or_404(post_id)
+    post.views += 1
+    db.session.commit()
+    return render_template('view_post.html', post=post)
+
+# Comment on a post
+@app.route('/post/<int:post_id>/comment', methods=['POST'])
+@login_required
+def comment_post(post_id):
+    text = request.form.get('text')
+    if len(text) > 500:
+        flash('Comment exceeds the 500-character limit.')
+        return redirect(url_for('view_post', post_id=post_id))
+
+    comment = Comment(text=text, user_id=current_user.id, post_id=post_id)
+    comment.save_comment()
+    return redirect(url_for('view_post', post_id=post_id))
+
+# Repost functionality
+@app.route('/post/<int:post_id>/repost', methods=['POST'])
+@login_required
+def repost(post_id):
+    repost = Repost(user_id=current_user.id, post_id=post_id)
+    repost.save_repost()
+    return redirect(url_for('view_post', post_id=post_id))
