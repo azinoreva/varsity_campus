@@ -1,3 +1,5 @@
+""" Posts model"""
+
 from datetime import datetime
 from .. import db
 
@@ -8,13 +10,13 @@ class Post(db.Model):
     text = db.Column(db.String(2000), nullable=True)  # Text limited to 2000 characters
     image = db.Column(db.String(255), nullable=True)  # Store image path
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+    views = db.Column(db.Integer, default=0)  # Number of views
 
     # Relationships
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     likes = db.relationship('Like', backref='post', lazy=True)  # Likes for the post
     comments = db.relationship('Comment', backref='post', lazy=True)  # Comments on the post
     reposts = db.relationship('Repost', backref='post', lazy=True)  # Reposts
-    views = db.Column(db.Integer, default=0)  # Number of views
 
     def save_post(self):
         db.session.add(self)

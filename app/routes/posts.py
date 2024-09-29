@@ -1,3 +1,5 @@
+""" route for posts"""
+
 from flask import render_template, redirect, url_for, request, flash
 from flask_login import login_required, current_user
 from .. import db
@@ -39,7 +41,7 @@ def like_post(post_id):
 @app.route('/post/<int:post_id>', methods=['GET'])
 def view_post(post_id):
     post = Post.query.get_or_404(post_id)
-    post.views += 1
+    post.views += 1  # Increment views
     db.session.commit()
     return render_template('view_post.html', post=post)
 
