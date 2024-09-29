@@ -1,14 +1,11 @@
-"""Entry point"""
+import unittest
+from app.utils import some_utility_function
 
-from app import create_app
-import os
+class UtilsTestCase(unittest.TestCase):
+    def test_some_utility_function(self):
+        result = some_utility_function('input data')
+        expected_result = 'expected output'  # Replace with your expected output
+        self.assertEqual(result, expected_result)
 
-# Create the Flask application instance
-app = create_app()
-
-# Main entry point for the application
-if __name__ == "__main__":
-    # Set the host and port if needed; default is 127.0.0.1:5000
-    app.run(host=os.getenv('FLASK_RUN_HOST', '127.0.0.1'),
-            port=int(os.getenv('FLASK_RUN_PORT', 5000)),
-            debug=os.getenv('FLASK_DEBUG', False))
+if __name__ == '__main__':
+    unittest.main()
