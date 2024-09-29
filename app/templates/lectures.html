@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Lectures{% endblock %}
+
+{% block content %}
+<h1>Lectures</h1>
+<ul class="list-group">
+    {% for lecture in lectures %}
+    <li class="list-group-item">
+        <a href="{{ url_for('lectures.detail', lecture_id=lecture.id) }}">{{ lecture.title }}</a>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}
