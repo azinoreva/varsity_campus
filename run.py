@@ -10,5 +10,5 @@ app = create_app()
 if __name__ == "__main__":
     # Set the host and port if needed; default is 127.0.0.1:5000
     app.run(host=os.getenv('FLASK_RUN_HOST', '127.0.0.1'),
-            port=int(os.getenv('FLASK_RUN_PORT', 3000)),
+            port=int(os.getenv('FLASK_RUN_PORT', 5000)),
             debug=os.getenv('FLASK_DEBUG', False))
