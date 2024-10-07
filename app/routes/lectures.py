@@ -3,7 +3,7 @@
 from flask import Blueprint, request, render_template, redirect, url_for, flash
 from flask_login import login_required, current_user
 from .. import db
-from .models import Lecture, User, LectureVideo, LectureDocument, Assignment, Notification
+from ..models import Lecture, User
 
 # Blueprint for lectures
 lectures_bp = Blueprint('lectures', __name__)

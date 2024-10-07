@@ -1,10 +1,12 @@
-from flask import render_template, redirect, url_for, request, flash, jsonify
+from flask import Blueprint, render_template, redirect, url_for, request, flash, jsonify
 from flask_login import login_required, current_user
 from ..models import Message, User, Channel, Reaction
 from .. import db
 
+#Blueprint for message
+message_bp = Blueprint ('message', __name__) 
 # Send a direct message
-@app.route('/message/send', methods=['POST'])
+@message_bp.route('/message/send', methods=['POST'])
 @login_required
 def send_message():
     receiver_id = request.form.get('receiver_id')
@@ -25,7 +27,7 @@ def send_message():
     return jsonify({'message': 'Message sent successfully'}), 200
 
 # Send a message to a group (channel)
-@app.route('/message/channel/<int:channel_id>/send', methods=['POST'])
+@message_bp.route('/message/channel/<int:channel_id>/send', methods=['POST'])
 @login_required
 def send_channel_message(channel_id):
     content = request.form.get('content')
@@ -44,7 +46,7 @@ def send_channel_message(channel_id):
     return jsonify({'message': 'Message sent successfully'}), 200
 
 # View messages in a channel
-@app.route('/channel/<int:channel_id>/messages', methods=['GET'])
+@message_bp.route('/channel/<int:channel_id>/messages', methods=['GET'])
 @login_required
 def view_channel_messages(channel_id):
     channel = Channel.query.get(channel_id)
@@ -55,7 +57,7 @@ def view_channel_messages(channel_id):
     return render_template('channel_messages.html', messages=messages, channel=channel)
 
 # View direct messages with a user
-@app.route('/messages/<int:user_id>', methods=['GET'])
+@message_bp.route('/messages/<int:user_id>', methods=['GET'])
 @login_required
 def view_direct_messages(user_id):
     user = User.query.get_or_404(user_id)
@@ -69,7 +71,7 @@ def view_direct_messages(user_id):
     return render_template('direct_messages.html', messages=messages, user=user)
 
 # Add a reaction to a message
-@app.route('/message/<int:message_id>/react', methods=['POST'])
+@message_bp.route('/message/<int:message_id>/react', methods=['POST'])
 @login_required
 def react_to_message(message_id):
     emoji = request.form.get('emoji')
@@ -83,7 +85,7 @@ def react_to_message(message_id):
     return jsonify({'message': 'Reaction added successfully'}), 200
 
 # Delete a message (either direct or group)
-@app.route('/message/<int:message_id>/delete', methods=['DELETE'])
+@message_bp.route('/message/<int:message_id>/delete', methods=['DELETE'])
 @login_required
 def delete_message(message_id):
     message = Message.query.get_or_404(message_id)

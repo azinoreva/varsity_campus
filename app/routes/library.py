@@ -1,11 +1,14 @@
 """Library route """
-from flask import render_template, request, redirect, url_for, flash
+from flask import Blueprint render_template, request, redirect, url_for, flash
 from flask_login import login_required, current_user
 from .. import db
 from .models import LibraryItem, LibraryRequest
 
+#Blueprint for Library
+library_bp = Blueprint('library', __name__)
+
 # Create a new library item
-@app.route('/library/item/create', methods=['GET', 'POST'])
+@library_bp.route('/library/item/create', methods=['GET', 'POST'])
 @login_required
 def create_library_item():
     """Route to create a new library item."""
@@ -42,7 +45,7 @@ def create_library_item():
     return render_template('create_library_item.html')
 
 # Request to download a library item that requires permission
-@app.route('/library/item/<int:item_id>/request', methods=['POST'])
+@library_bp.route('/library/item/<int:item_id>/request', methods=['POST'])
 @login_required
 def request_library_item(item_id):
     """Route to request a library item that requires permission."""
@@ -58,14 +61,14 @@ def request_library_item(item_id):
     return redirect(url_for('view_library_item', item_id=item_id))
 
 # View a specific library item
-@app.route('/library/item/<int:item_id>', methods=['GET'])
+@library_bp.route('/library/item/<int:item_id>', methods=['GET'])
 def view_library_item(item_id):
     """Route to view details of a library item."""
     item = LibraryItem.query.get_or_404(item_id)
     return render_template('view_library_item.html', item=item)
 
 # Delete a library item (only for super admins)
-@app.route('/library/item/<int:item_id>/delete', methods=['POST'])
+@library_bp.route('/library/item/<int:item_id>/delete', methods=['POST'])
 @login_required
 def delete_library_item(item_id):
     """Route to delete a library item."""
@@ -81,7 +84,7 @@ def delete_library_item(item_id):
     return redirect(url_for('library'))
 
 # List all library items
-@app.route('/library', methods=['GET'])
+@library_bp.route('/library', methods=['GET'])
 def library():
     """Route to list all library items."""
     items = LibraryItem.query.all()

@@ -1,11 +1,14 @@
-from flask import render_template, redirect, url_for, request, jsonify
+"""Comments route"""
+from flask import Blueprint, render_template, redirect, url_for, request, jsonify
 from flask_login import login_required, current_user
-from ..models import Comment, CommentLike, CommentDislike, CommentRepost, Post
+from ..models import Comment
 from .. import db
 
+#blue print for comments
+comments_bp = Blueprint('comments', __name__)
 
 # Create a new comment on a post
-@app.route('/post/<int:post_id>/comment', methods=['POST'])
+@comments_bp.route('/comment/<int:post_id>/comment', methods=['POST'])
 @login_required
 def add_comment(post_id):
     content = request.form.get('content')
@@ -25,7 +28,7 @@ def add_comment(post_id):
 
 
 # Like a comment
-@app.route('/comment/<int:comment_id>/like', methods=['POST'])
+@comments_bp.route('/comment/<int:comment_id>/like', methods=['POST'])
 @login_required
 def like_comment(comment_id):
     comment = Comment.query.get_or_404(comment_id)
@@ -44,7 +47,7 @@ def like_comment(comment_id):
 
 
 # Dislike a comment
-@app.route('/comment/<int:comment_id>/dislike', methods=['POST'])
+@comments_bp.route('/comment/<int:comment_id>/dislike', methods=['POST'])
 @login_required
 def dislike_comment(comment_id):
     comment = Comment.query.get_or_404(comment_id)
@@ -65,7 +68,7 @@ def dislike_comment(comment_id):
 
 
 # Repost a comment
-@app.route('/comment/<int:comment_id>/repost', methods=['POST'])
+@comments_bp.route('/comment/<int:comment_id>/repost', methods=['POST'])
 @login_required
 def repost_comment(comment_id):
     comment = Comment.query.get_or_404(comment_id)
