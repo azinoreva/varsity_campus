@@ -2,12 +2,14 @@
 
 # app/__init__.py
 from flask import Flask
+from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 import os
 
 # Initialize the database
 db = SQLAlchemy()
 
+login_manager = LoginManager()
 
 def create_app():
     app = Flask(__name__)
@@ -20,15 +22,16 @@ def create_app():
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     db.init_app(app)
+    login_manager.init_app(app)
 
     with app.app_context():
         from . import models  # Import your models
         db.create_all()  # Create database tables if they don't exist
 
     # Register blueprints for routes
-    from .routes import auth, posts, community
+    from .routes import auth, posts, communities
     app.register_blueprint(auth.bp)
     app.register_blueprint(posts.bp)
-    app.register_blueprint(community.bp)
+    app.register_blueprint(communities.bp)
 
     return app

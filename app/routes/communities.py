@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for, flash
 from flask_login import login_required, current_user
 from .. import db
-from .models import Community, User
+from app.models import Community, User
 
 # Blueprint for community routes
 community_bp = Blueprint('community', __name__)

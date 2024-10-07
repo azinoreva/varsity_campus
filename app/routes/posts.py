@@ -1,12 +1,15 @@
 """ route for posts"""
 
 from flask import render_template, redirect, url_for, request, flash
+from flask import Blueprint, render_template, request, redirect, url_for
 from flask_login import login_required, current_user
 from .. import db
-from .models import Post, Like, Comment, Repost
+from ..models import Post, Comment
 
 # Create a new post
-@app.route('/post/create', methods=['GET', 'POST'])
+posts_bp = Blueprint('posts', __name__)
+
+@posts_bp.route('/post/create', methods=['GET', 'POST'])
 @login_required
 def create_post():
     if request.method == 'POST':
@@ -28,7 +31,7 @@ def create_post():
     return render_template('create_post.html')
 
 # Like a post
-@app.route('/post/<int:post_id>/like', methods=['POST'])
+@posts_bp.route('/post/<int:post_id>/like', methods=['POST'])
 @login_required
 def like_post(post_id):
     post = Post.query.get_or_404(post_id)
@@ -38,7 +41,7 @@ def like_post(post_id):
     return redirect(url_for('view_post', post_id=post_id))
 
 # View a post
-@app.route('/post/<int:post_id>', methods=['GET'])
+@posts_bp.route('/post/<int:post_id>', methods=['GET'])
 def view_post(post_id):
     post = Post.query.get_or_404(post_id)
     post.views += 1  # Increment views
@@ -46,7 +49,7 @@ def view_post(post_id):
     return render_template('view_post.html', post=post)
 
 # Comment on a post
-@app.route('/post/<int:post_id>/comment', methods=['POST'])
+@posts_bp.route('/post/<int:post_id>/comment', methods=['POST'])
 @login_required
 def comment_post(post_id):
     text = request.form.get('text')
@@ -59,7 +62,7 @@ def comment_post(post_id):
     return redirect(url_for('view_post', post_id=post_id))
 
 # Repost functionality
-@app.route('/post/<int:post_id>/repost', methods=['POST'])
+@posts_bp.route('/post/<int:post_id>/repost', methods=['POST'])
 @login_required
 def repost(post_id):
     repost = Repost(user_id=current_user.id, post_id=post_id)

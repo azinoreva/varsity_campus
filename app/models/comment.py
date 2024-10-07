@@ -4,6 +4,7 @@ from .. import db
 
 class Comment(db.Model):
     __tablename__ = 'comments'
+    __table_args__ = {'extend_existing': True}
 
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text, nullable=False)
