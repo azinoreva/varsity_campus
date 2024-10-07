@@ -5,6 +5,8 @@ from flask import Flask
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 import os
+from .routes.auth import bp as auth_bp
+from .routes.posts import bp as posts_bp
 
 # Initialize the database
 db = SQLAlchemy()
@@ -28,10 +30,13 @@ def create_app():
         from . import models  # Import your models
         db.create_all()  # Create database tables if they don't exist
 
-    # Register blueprints for routes
-    from .routes import auth, posts, communities
-    app.register_blueprint(auth.bp)
-    app.register_blueprint(posts.bp)
-    app.register_blueprint(communities.bp)
+    # Register blueprints for route-s
+    from .routes import auth, posts, communities, comments, courses, lectures
+    app.register_blueprint(auth_bp)
+    app.register_blueprint(comments_bp)
+    app.register_blueprint(courses_bp)
+    app.register_blueprint(lectures_bp)
+    app.register_blueprint(posts_bp)
+    app.register_blueprint(communities_bp)
 
     return app

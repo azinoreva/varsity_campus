@@ -1,5 +1,5 @@
 """Course Model"""
-
+from .. import db
 # Course Model
 class Course(db.Model):
     __tablename__ = 'courses'
