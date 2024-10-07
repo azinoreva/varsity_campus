@@ -6,4 +6,3 @@ from .community import Community
 from .lecture import Lecture
 from .course import Course
 
-db = SQLAlchemy()

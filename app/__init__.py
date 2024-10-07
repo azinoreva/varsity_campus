@@ -3,13 +3,17 @@
 # app/__init__.py
 from flask import Flask
 from flask_login import LoginManager
+from .db import db, migrate
+from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 import os
-from .routes.auth import bp as auth_bp
-from .routes.posts import bp as posts_bp
+from .routes.auth import auth_bp
+from .routes.posts import posts_bp
+from .routes.communities import community_bp
+from .routes.comments import comments_bp
+from .routes.courses import courses_bp
+from .routes.lectures import lectures_bp
 
-# Initialize the database
-db = SQLAlchemy()
 
 login_manager = LoginManager()
 
@@ -24,6 +28,7 @@ def create_app():
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     db.init_app(app)
+    migrate.init_app(app, db)
     login_manager.init_app(app)
 
     with app.app_context():
@@ -37,6 +42,6 @@ def create_app():
     app.register_blueprint(courses_bp)
     app.register_blueprint(lectures_bp)
     app.register_blueprint(posts_bp)
-    app.register_blueprint(communities_bp)
+    app.register_blueprint(community_bp)
 
     return app
