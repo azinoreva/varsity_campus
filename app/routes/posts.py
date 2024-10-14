@@ -1,10 +1,8 @@
-""" route for posts"""
-
 from flask import render_template, redirect, url_for, request, flash
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint
 from flask_login import login_required, current_user
-from .. import db
-from ..models import Post, Comment
+from .. import db, utils
+from ..models import Post
 
 # Create a new post
 posts_bp = Blueprint('posts', __name__)
@@ -22,7 +20,7 @@ def create_post():
         # Save image and create post
         image_path = None
         if image:
-            image_path = save_image(image)  # Function to save the image file
+            image_path = utils.save_image(image)  # Function to save the image file
 
         post = Post(text=text, image=image_path, user_id=current_user.id)
         post.save_post()
@@ -35,6 +33,11 @@ def create_post():
 @login_required
 def like_post(post_id):
     post = Post.query.get_or_404(post_id)
+    existing_like = Like.query.filter_by(user_id=current_user.id, post_id=post_id).first()
+    if existing_like:
+        flash('You have already liked this post.')
+        return redirect(url_for('view_post', post_id=post_id))
+
     like = Like(user_id=current_user.id, post_id=post_id)
     db.session.add(like)
     db.session.commit()
@@ -57,14 +60,18 @@ def comment_post(post_id):
         flash('Comment exceeds the 500-character limit.')
         return redirect(url_for('view_post', post_id=post_id))
 
+    post = Post.query.get_or_404(post_id)
     comment = Comment(text=text, user_id=current_user.id, post_id=post_id)
-    comment.save_comment()
+    db.session.add(comment)
+    db.session.commit()
     return redirect(url_for('view_post', post_id=post_id))
 
 # Repost functionality
 @posts_bp.route('/post/<int:post_id>/repost', methods=['POST'])
 @login_required
 def repost(post_id):
+    post = Post.query.get_or_404(post_id)
     repost = Repost(user_id=current_user.id, post_id=post_id)
-    repost.save_repost()
+    db.session.add(repost)
+    db.session.commit()
     return redirect(url_for('view_post', post_id=post_id))

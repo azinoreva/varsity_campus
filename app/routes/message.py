@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash, jsonify
 from flask_login import login_required, current_user
-from ..models import Message, User, Channel, Reaction
+from ..models import Message, User
 from .. import db
 
 #Blueprint for message
