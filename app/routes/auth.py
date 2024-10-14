@@ -36,7 +36,7 @@ def register():
     flash('Registration successful! You can now log in.')
     return redirect(url_for('auth.login'))
 
-  return render_template('auth/register.html')
+  return render_template('register.html')
 
 
 # Login Route
@@ -56,7 +56,7 @@ def login():
       flash('Invalid email or password. Please try again.')
       return redirect(url_for('auth.login'))
 
-  return render_template('auth/login.html')
+  return render_template('login.html')
 
 
 # Logout Route

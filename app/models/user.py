@@ -38,7 +38,7 @@ class UserOAuth(OAuthConsumerMixin, db.Model):
   __tablename__ = 'user_oauth'
 
   user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-  user = db.relationship('User', backref=db.backref('oauth', uselist=False))
+  user = db.relationship('User', backref='oauth', uselist=False)
 
 
 # User Model with Roles and OAuth
