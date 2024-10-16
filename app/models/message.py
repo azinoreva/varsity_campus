@@ -19,9 +19,9 @@ class Message(db.Model):
     reactions = db.relationship('Reaction', backref='message', lazy=True)  # Users can react to messages
 
     # Relationship with sender and receiver
-    sender = db.relationship('User', foreign_keys=[sender_id], backref='sent_messages_user', lazy='dynamic')
-    receiver = db.relationship('User', foreign_keys=[receiver_id], backref='received_messages_user', lazy='dynamic')
-    channel = db.relationship('Channel', backref='messages', lazy='dynamic')
+    sender = db.relationship('User', foreign_keys=[sender_id], overlaps='sender_user, sent_messages')
+    receiver = db.relationship('User', foreign_keys=[receiver_id], overlaps='receiver_user, received_messages')
+    channel = db.relationship('Channel', backref='channel_messages', lazy='select')
 
     def __init__(self, sender_id, receiver_id=None, channel_id=None, content=""):
         self.sender_id = sender_id
@@ -60,7 +60,7 @@ class Channel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), unique=True, nullable=False)
     description = db.Column(db.String(255), nullable=True)
-    messages = db.relationship('Message', backref='channel', lazy=True)
+    messages = db.relationship('Message', backref='related_channel', lazy='dynamic') 
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     created_by = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)  # Channel creator
 

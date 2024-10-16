@@ -14,6 +14,7 @@ class Post(db.Model):
 
     # Relationships
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    community_id = db.Column(db.Integer, db.ForeignKey('communities.id'), nullable=False)
     likes = db.relationship('Like', backref='post', lazy=True)  # Likes for the post
     comments = db.relationship('Comment', backref='post', lazy=True)  # Comments on the post
     reposts = db.relationship('Repost', backref='post', lazy=True)  # Reposts

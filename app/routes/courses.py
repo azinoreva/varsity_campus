@@ -9,12 +9,12 @@ from ..models import Course
 courses_bp = Blueprint('courses', __name__)
 
 # View assignments and notifications
-@courses_bp.route('/courses', methods=['GET'])
+@courses_bp.route('/home', methods=['GET'])
 @login_required
 def view_courses():
     # Get all courses for the current student
     courses = Course.query.filter_by(student_id=current_user.id).all()
-    return render_template('courses/view_courses.html', courses=courses)
+    return render_template('courses.html', courses=courses)
 
 # Mark assignment as done
 @courses_bp.route('/course/<int:course_id>/mark_done', methods=['POST'])

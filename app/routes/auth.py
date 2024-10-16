@@ -51,7 +51,7 @@ def login():
     if user and check_password_hash(user.password_hash, password):
       login_user(user)  # Log in the user
       flash('Login successful!')
-      return redirect(url_for('home'))  # Redirect to home or dashboard
+      return redirect(url_for('courses.view_courses'))  # Redirect to home or dashboard
     else:
       flash('Invalid email or password. Please try again.')
       return redirect(url_for('auth.login'))
