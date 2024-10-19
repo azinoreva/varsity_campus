@@ -40,7 +40,6 @@ def register():
 
 
 # Login Route
-@auth_bp.route('/')
 @auth_bp.route('/login', methods=['GET', 'POST'])
 def login():
   if request.method == 'POST':

@@ -9,11 +9,14 @@ from flask_sqlalchemy import SQLAlchemy
 import os
 from cryptography.fernet import Fernet
 from .routes.auth import auth_bp
+from .routes.home import home_bp
+from .routes.dashboard import dashboard_bp
 from .routes.posts import posts_bp
 from .routes.communities import community_bp
 from .routes.courses import courses_bp
 from .routes.lectures import lectures_bp
 from .routes.message import message_bp
+from .routes.library import library_bp
 
 login_manager = LoginManager()
 
@@ -45,12 +48,15 @@ def create_app():
         db.create_all()
 
     # Register blueprints for route-s
+    app.register_blueprint(home_bp)
+    app.register_blueprint(dashboard_bp)
     app.register_blueprint(auth_bp)
     app.register_blueprint(courses_bp)
     app.register_blueprint(lectures_bp)
     app.register_blueprint(posts_bp)
     app.register_blueprint(community_bp)
     app.register_blueprint(message_bp)
+    app.register_blueprint(library_bp)
 
     return app
 

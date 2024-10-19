@@ -1,5 +1,5 @@
 """Library route """
-from flask import Blueprint render_template, request, redirect, url_for, flash
+from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required, current_user
 from .. import db
 from ..models import LibraryItem, LibraryRequest
@@ -62,6 +62,7 @@ def request_library_item(item_id):
 
 # View a specific library item
 @library_bp.route('/library/item/<int:item_id>', methods=['GET'])
+@login_required
 def view_library_item(item_id):
     """Route to view details of a library item."""
     item = LibraryItem.query.get_or_404(item_id)
@@ -85,6 +86,7 @@ def delete_library_item(item_id):
 
 # List all library items
 @library_bp.route('/library', methods=['GET'])
+@login_required
 def library():
     """Route to list all library items."""
     items = LibraryItem.query.all()

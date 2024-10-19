@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %} {% endblock %}
+
+{% block navigation %} {% endblock %}
+
+{% block content %} 
+<h1>Welcome, {{ user.username }} </h1>
+
+<div>
+    <label>profile picture:</label>
+    {% if user.profile_image %}
+    <img src="{{ url_for('static', filename='images/' + user.profile_image) }}" style="width:100px;">
+    {% else %}
+    <p> no profile picure </p>
+    {% endif %}
+</div>
+
+<h2>profile</h2>
+
+<form method="POST" enctype='multipart/form-data'>
+    <div>
+        <label>Bio:</label>
+        <textarea name="bio" row=10 column=1>{{ user.bio }} </textarea>
+        <input type="file" name="profile_image">
+        <button type="submit">update profile</button>
+    </form>
+
+    <h2>your posts</h2>
+    <!-- <ul>
+        {% for post in posts %}
+        <li>
+            <p>{{ post.content }}</p>
+            <form action="{{ url_for('delete_post', post_id=post.id) }}" method="POST">
+                <button type="submit">Delete post</button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul> -->
+{% endblock %}

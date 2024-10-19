@@ -9,7 +9,7 @@ from ..models import Course
 courses_bp = Blueprint('courses', __name__)
 
 # View assignments and notifications
-@courses_bp.route('/home', methods=['GET'])
+@courses_bp.route('/courses', methods=['GET'])
 @login_required
 def view_courses():
     # Get all courses for the current student

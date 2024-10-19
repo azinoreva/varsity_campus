@@ -2,6 +2,10 @@
 
 {% block title %}Register{% endblock %}
 
+{% block navigation %}
+<!-- empty navigation bar -->
+{% endblock %}
+
 {% block content %}
 <h1>Register</h1>
 <form method="POST" action="{{ url_for('auth.register') }}">

@@ -45,11 +45,18 @@ def like_post(post_id):
 
 # View a post
 @posts_bp.route('/post/<int:post_id>', methods=['GET'])
-def view_post(post_id):
+def view_a_post(post_id):
     post = Post.query.get_or_404(post_id)
     post.views += 1  # Increment views
     db.session.commit()
     return render_template('view_post.html', post=post)
+
+@posts_bp.route('/posts', methods=['GET'])
+@login_required
+def view_posts():
+    """Route to list all post items."""
+    items = Post.query.all()
+    return render_template('posts.html', items=items)
 
 # Comment on a post
 @posts_bp.route('/post/<int:post_id>/comment', methods=['POST'])
@@ -75,3 +82,12 @@ def repost(post_id):
     db.session.add(repost)
     db.session.commit()
     return redirect(url_for('view_post', post_id=post_id))
+
+@posts_bp.route('/delete_post/<int:post_id>')
+@login_required
+def delete_post(post_id):
+    post = Piost.query.get_or_404(post_id)
+    db.session.delete(post)
+    db.session.commit()
+    flash('Post deleted sucessfully', 'success')
+    return redirect(url_for('profile', user_id=post.user_id))

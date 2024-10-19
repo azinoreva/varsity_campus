@@ -11,7 +11,7 @@ community_bp = Blueprint('community', __name__)
 @login_required
 def view_communities():
     communities = Community.query.all()
-    return render_template('view_communities.html', communities=communities)
+    return render_template('communities.html', communities=communities)
 
 # Join a community
 @community_bp.route('/community/join/<int:community_id>', methods=['POST'])
