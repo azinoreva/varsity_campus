@@ -24,6 +24,10 @@
 {% endblock %}
 
 {% block content %}
+<div class="search-container">
+    <input type="text" id="search-bar" placeholder="Search...">
+    <span class="search-icon">🔍</span>
+</div>
 <h1>Library</h1>
 <ul class="list-group">
     {% for item in library_items %}

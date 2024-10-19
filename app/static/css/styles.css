@@ -29,3 +29,34 @@ body {
     justify-content: flex-end;
     margin-bottom: 20px;
 }
+
+/* Search */
+.search-container {
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+#search-bar {
+    width: 50%;
+    padding: 10px;
+    margin: 20px;
+}
+
+.search-icon {
+    position: absolute;
+    top: 50%;
+    right: 27%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+@media (max-width: 500px) {
+    #search-bar {
+        width: 70%;
+    }
+
+    .search-icon {
+        right: 20%;
+    }
+}
