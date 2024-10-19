@@ -10,7 +10,7 @@
                 <a class="nav-link" href="{{ url_for('dashboard.profile', user_id=current_user.id) }}">Profile</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('community.view_communities') }}">Community</a>
+                <a class="nav-link" href="{{ url_for('community.view_communities') }}"><img alt="community" src="{{ url_for('static', filename='images/community-32x32.png') }}">y</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('posts.create_post') }}">Posts</a>
