@@ -3,6 +3,7 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required, current_user
 from .. import db
 from ..models import LibraryItem, LibraryRequest
+from ..utils import save_file
 
 #Blueprint for Library
 library_bp = Blueprint('library', __name__)
@@ -25,7 +26,7 @@ def create_library_item():
         # Save the file and create the library item
         file_path = save_file(file)  # Function to save the file
 
-        requires_permission = request.form.get('requires_permission') == 'on'
+        requires_permission = request.form.get('requires_permission', 'off') == 'on'
         permission_password = None
         if requires_permission:
             permission_password = request.form.get('permission_password')
@@ -40,7 +41,7 @@ def create_library_item():
             owner_id=current_user.id
         )
         item.save_item()
-        return redirect(url_for('library'))
+        return redirect(url_for('library.library'))
 
     return render_template('create_library_item.html')
 
@@ -89,5 +90,5 @@ def delete_library_item(item_id):
 @login_required
 def library():
     """Route to list all library items."""
-    items = LibraryItem.query.all()
-    return render_template('library.html', items=items)
+    library_items = LibraryItem.query.all()
+    return render_template('library.html', library_items=library_items)

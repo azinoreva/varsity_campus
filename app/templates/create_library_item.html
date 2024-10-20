@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %} {% endblock %}
+
+{% block navigation %} 
+<!-- empty navigation bar -->
+{% endblock %}
+
+{% block content %} 
+<form method="POST" enctype="multipart/form-data">
+<div>
+    <label for="">Title:</label>
+    <input type="text" name="title">
+</div>
+<div>
+    <label for="">Description:</label>
+    <input type="text" name="description">
+</div>
+<div>
+    <select id="item_type" name="item_type">
+        <option value="pdf">PDF</option>
+        <option value="docs">DOC</option>
+        <option value="epub">EPUB</option>
+        <option value="zip">ZIP</option>
+    </select>
+</div>
+<div>
+    <label for="">Choose File</label>
+    <input type="file" name="file">
+</div>
+<div>
+    <label for="">Download Permission?</label>
+    <input type="checkbox" name="requires_permission" value="on">
+    <input type="hidden" name="requires_password" value="">
+</div>
+<div>
+    <button type="submit">Upload</button>
+</div>
+</form>
+{% endblock %}

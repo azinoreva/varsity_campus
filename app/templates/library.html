@@ -23,7 +23,14 @@
 </nav>
 {% endblock %}
 
+
+
+
 {% block content %}
+<div>
+    <a href="{{ url_for('library.create_library_item') }}">add</a>
+</div>
+
 <div class="search-container">
     <input type="text" id="search-bar" placeholder="Search...">
     <span class="search-icon">🔍</span>
@@ -33,7 +40,7 @@
     {% for item in library_items %}
     <li class="list-group-item">
         <strong>{{ item.title }}</strong> - {{ item.type }}
-        <a href="{{ url_for('library.detail', item_id=item.id) }}" class="btn btn-info btn-sm">View</a>
+        <a href="{{ url_for('library.view_library_item', item_id=item.id) }}" class="btn btn-info btn-sm">View</a>
     </li>
     {% endfor %}
 </ul>

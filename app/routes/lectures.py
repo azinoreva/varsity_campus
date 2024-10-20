@@ -36,7 +36,7 @@ def create_lecture():
     return render_template('lectures/create_lecture.html')
 
 # Add a student to a lecture
-@lectures_bp.route('/lectures/<str:user_email>/add_student', methods=['POST'])
+@lectures_bp.route('/lectures/<int:lecture_id>/add_student', methods=['POST'])
 @login_required
 def add_student_to_lecture(lecture_id):
     if not current_user.has_role('Lecturer'):

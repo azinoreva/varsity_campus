@@ -15,6 +15,17 @@ def save_image(form_image):
     form_image.save(image_path)
     return image_filename
 
+def save_file(file_name):
+    """Save an uploaded file and return the filename."""
+    random_hex = secrets.token_hex(8)  # Generate a random hex string
+    _, f_ext = os.path.splitext(file_name.filename)  # Get file extension
+    full_filename = random_hex + f_ext
+    file_path = os.path.join(current_app.root_path, 'static/media', full_filename)  # Path to save the file
+
+    # Save the file to the filesystem
+    file_name.save(file_path)
+    return full_filename
+
 def delete_file(file_path):
     """Delete a file if it exists."""
     if os.path.isfile(file_path):
