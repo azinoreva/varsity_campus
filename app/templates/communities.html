@@ -3,24 +3,29 @@
 {% block title %}Communities{% endblock %}
 
 {% block navigation %}
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('dashboard.profile', user_id=current_user.id) }}">Profile</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('courses.view_courses') }}"><img alt="courses" title="courses" src="{{ url_for('static', filename='images/courses-32x32.png') }}"></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('posts.create_post') }}"><img alt="posts" title="posts" src="{{ url_for('static', filename='images/posts-32x32.png') }}"></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('library.library') }}"><img alt="library" title="library" src="{{ url_for('static', filename='images/library-32x32.png') }}"></a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+<div class="hamburger" id="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light" id="navbar">
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('dashboard.profile', user_id=current_user.id) }}"><i class="fa fa-user" title="profile" aria-hidden="true"></i></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('courses.view_courses') }}"><i class="fa fa-graduation-cap" aria-hidden="true"></i></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('posts.create_post') }}"><i class="fa fa-pencil-square-o" title="posts" aria-hidden="true"></i></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('library.library') }}"><i class="fa fa-book" title="library" aria-hidden="true"></i></a>
+            </li>
+        </ul>
+    </div>
+</nav>
 {% endblock %}
 {% block content %}
 <h1>Communities</h1>
