@@ -3,7 +3,12 @@
 {% block title %}Home{% endblock %}
 
 {% block navigation %}
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<div class="hamburger" id="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light" id="navbar">
     <a class="navbar-brand" href="{{ url_for('home.home') }}">Varsity App</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -23,7 +28,11 @@
 
 {% block content %}
 <h1>Welcome to Varsity App</h1>
-<h2>Your one-stop platform for academic resources. It is a website designed to make a students's university life easire;
+<h1>
+    <a href="{{ url_for('auth.login') }}">Login </a>or
+    <a href="{{ url_for('auth.register') }}">Register</a>
+</h1>
+<h2>Your one-stop platform for academic resources. It is a website designed to make a students's university life easier;
     by compatmentalizing all the resources they need into one package. It comes with: a courses page, where
     the student can view all his courses, a posts page, which lets a student add post, like comment and share other posts,
     a library page that comes with a wide range of resources that are relevant to the student and so much more.
