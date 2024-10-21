@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Posts{% endblock %}
+{% block title %}Search Results{% endblock %}
 
 {% block navigation %}
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -24,19 +24,18 @@
 {% endblock %}
 
 {% block content %}
-<h1>Recent Posts</h1>
+<h1>Search Results</h1>
 
-<!-- Search Bar -->
-<form action="{{ url_for('posts.search_posts') }}" method="GET" class="form-inline my-2 my-lg-0">
-    <input class="form-control mr-sm-2" type="search" name="q" placeholder="Search posts" aria-label="Search" required>
-    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-</form>
-
-<ul class="list-group mt-4">
+{% if posts %}
+<ul class="list-group">
     {% for post in posts %}
     <li class="list-group-item">
         <a href="{{ url_for('posts.view_a_post', post_id=post.id) }}">{{ post.title }}</a>
+        <p>{{ post.text[:100] }}...</p> <!-- Display the first 100 characters of the post -->
     </li>
     {% endfor %}
 </ul>
+{% else %}
+<p>No posts found matching your query.</p>
+{% endif %}
 {% endblock %}

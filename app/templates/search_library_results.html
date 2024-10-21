@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Library Search Results{% endblock %}
+
+{% block content %}
+<h1>Search Results</h1>
+
+{% if library_items %}
+    <ul class="list-group">
+        {% for item in library_items %}
+        <li class="list-group-item">
+            <a href="{{ url_for('library.view_library_item', item_id=item.id) }}">{{ item.title }}</a>
+            <p>{{ item.description }}</p>
+        </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No items found matching your search.</p>
+{% endif %}
+{% endblock %}

@@ -92,3 +92,19 @@ def library():
     """Route to list all library items."""
     library_items = LibraryItem.query.all()
     return render_template('library.html', library_items=library_items)
+
+# Search library
+@library_bp.route('/library/search', methods=['GET'])
+@login_required
+def search_library():
+    """Search library items by title or description."""
+    query = request.args.get('q')  
+    if query:
+        library_items = LibraryItem.query.filter(
+            (LibraryItem.title.ilike(f'%{query}%')) |
+            (LibraryItem.description.ilike(f'%{query}%'))
+        ).all()
+        return render_template('search_library_results.html', library_items=library_items)
+    else:
+        flash("Please enter a search term.", "warning")
+        return redirect(url_for('library.library'))

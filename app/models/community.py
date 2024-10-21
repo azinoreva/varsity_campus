@@ -1,4 +1,3 @@
-"""Community Model"""
 from .. import db
 from datetime import datetime
 
@@ -12,7 +11,10 @@ class Community(db.Model):
     description = db.Column(db.String(255), nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
-    posts = db.relationship('Post', backref='community', lazy='dynamic')
+    # Relationship to posts (community messages)
+    messages = db.relationship('CommunityMessage', backref='community', lazy='dynamic')
+    
+    # Many-to-Many relationship between Users and Communities
     members = db.relationship('User',
                               secondary='user_community',
                               backref=db.backref('communities',
@@ -39,9 +41,24 @@ community_names = [
 ]
 
 
-# Add communities to the database
+# Function to add predefined communities to the database
 def create_communities():
     for name in community_names:
-        community = Community(name=name)
-        db.session.add(community)
+        existing_community = Community.query.filter_by(name=name).first()
+        if not existing_community:
+            community = Community(name=name)
+            db.session.add(community)
     db.session.commit()
+
+
+# CommunityMessage Model
+class CommunityMessage(db.Model):
+    __tablename__ = 'community_messages'
+
+    id = db.Column(db.Integer, primary_key=True)
+    message = db.Column(db.Text, nullable=False)
+    file_url = db.Column(db.String(255), nullable=True)  # Optional file
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    
+    community_id = db.Column(db.Integer, db.ForeignKey('communities.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
