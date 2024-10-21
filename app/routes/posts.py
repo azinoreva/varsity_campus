@@ -2,7 +2,7 @@ from flask import render_template, redirect, url_for, request, flash
 from flask import Blueprint
 from flask_login import login_required, current_user
 from .. import db, utils
-from ..models import Post, Comment, Repost
+from ..models import Post
 
 # Create a new post
 posts_bp = Blueprint('posts', __name__)

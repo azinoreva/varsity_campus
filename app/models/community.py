@@ -41,14 +41,14 @@ community_names = [
 ]
 
 
-# Function to add predefined communities to the database
-def create_communities():
-    for name in community_names:
-        existing_community = Community.query.filter_by(name=name).first()
-        if not existing_community:
-            community = Community(name=name)
-            db.session.add(community)
-    db.session.commit()
+# Function to add predefined communities to the database comment it out when you first start flask
+#def create_communities():
+#    for name in community_names:
+#        existing_community = Community.query.filter_by(name=name).first()
+#        if not existing_community:
+#            community = Community(name=name)
+#           db.session.add(community)
+#   db.session.commit()
 
 
 # CommunityMessage Model
@@ -62,3 +62,5 @@ class CommunityMessage(db.Model):
     
     community_id = db.Column(db.Integer, db.ForeignKey('communities.id'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    
+    user = db.relationship('User', back_populates='messages')

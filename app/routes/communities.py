@@ -1,7 +1,9 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask_login import login_required, current_user
 from .. import db, utils
-from app.models import Community, User, CommunityMessage
+from app.models import Community, User
+from app.models.community import CommunityMessage 
+from sqlalchemy.orm import joinedload
 
 # Blueprint for community routes
 community_bp = Blueprint('community', __name__)
@@ -55,40 +57,38 @@ def leave_community(community_id):
     return redirect(url_for('community.view_communities'))
 
 # View specific community and its messages
-@community_bp.route('/community/<int:community_id>', methods=['GET'])
+@community_bp.route('/community/<int:community_id>', methods=['GET', 'POST'])
 @login_required
 def view_community_detail(community_id):
     community = Community.query.get_or_404(community_id)
-    messages = CommunityMessage.query.filter_by(community_id=community_id).order_by(CommunityMessage.timestamp.desc()).all()
-    return render_template('community_detail.html', community=community, messages=messages)
+    messages = CommunityMessage.query.options(joinedload(CommunityMessage.user)).filter_by(community_id=community_id).all()
+    # Handle posting a message
+    if request.method == 'POST':
+        content = request.form.get('content')  # For text content
+        file = request.files.get('file')  # For media uploads (image, video, or file)
 
-# Post a message in a community (text, image, video, file)
-@community_bp.route('/community/<int:community_id>/post', methods=['POST'])
-@login_required
-def post_message(community_id):
-    community = Community.query.get_or_404(community_id)
-    content = request.form.get('content')  # For text content
-    file = request.files.get('file')  # For media uploads (image, video, or file)
+        if not content and not file:
+            flash('You must provide either a message or a file.')
+            return redirect(url_for('community.view_community_detail', community_id=community_id))
 
-    if not content and not file:
-        flash('You must provide either a message or a file.')
+        # If a file is uploaded, handle it (image/video/file)
+        filename = None
+        if file:
+            filename = utils.save_file(file)  # Assuming `save_file` is a utility function for saving files
+
+        # Create and save the message
+        new_message = CommunityMessage(
+            user_id=current_user.id,
+            community_id=community_id,
+            message=content,
+            file_url=filename  # Set file if present
+        )
+
+        db.session.add(new_message)
+        db.session.commit()
+
+        flash('Your message has been posted.')
         return redirect(url_for('community.view_community_detail', community_id=community_id))
 
-    # If a file is uploaded, handle it (image/video/file)
-    filename = None
-    if file:
-        filename = save_file(file)
+    return render_template('inside_communities.html', community=community, messages=messages)
 
-    # Create and save the message
-    new_message = CommunityMessage(
-        user_id=current_user.id,
-        community_id=community_id,
-        content=content,
-        media_filename=filename  # Set file if present
-    )
-
-    db.session.add(new_message)
-    db.session.commit()
-
-    flash('Your message has been posted.')
-    return redirect(url_for('community.view_community_detail', community_id=community_id))

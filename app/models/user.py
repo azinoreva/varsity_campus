@@ -58,6 +58,7 @@ class User(UserMixin, db.Model):
 
     # Relationships for roles, posts, messages, and communities
     roles = db.relationship('Role', secondary=user_roles, back_populates='users')
+    messages = db.relationship('CommunityMessage', back_populates='user')
     posts = db.relationship('Post', backref='author', lazy='dynamic')
     comments = db.relationship('Comment', backref='author', lazy='dynamic')
     sent_messages = db.relationship('Message',
