@@ -46,7 +46,7 @@ body {
 .navbar {
     position: absolute;
     top: 0;
-    left: 100%;
+    left: -100%;
     margin-bottom: 20px;
     transition: 0.3s;
     z-index: 1;
