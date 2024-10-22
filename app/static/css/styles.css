@@ -41,8 +41,6 @@ body {
     z-index: 2;
 }
 
-
-
 .navbar {
     position: absolute;
     top: 0;
@@ -84,4 +82,31 @@ body {
     .search-icon {
         right: 20%;
     }
+}
+
+/* Dark mode */
+.darkmodeToggle {
+    position: absolute;
+    right: 10px;
+}
+
+.body.dark-mode {
+    background-color: #011C27;
+    color: #B0DAF1;
+}
+
+.hamburger.dark-mode span {
+    background-color: #B0DAF1;
+}
+
+.navbar.dark-mode {
+    background-color: #011C27;
+}
+
+.navbar.dark-mode i {
+    color: #B0DAF1;
+}
+
+.list-group-item.dark-mode {
+    background-color: #011C27;
 }
