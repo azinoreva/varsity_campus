@@ -32,9 +32,6 @@
 
 
 {% block content %}
-<div>
-    <a href="{{ url_for('library.create_library_item') }}">add</a>
-</div>
 
 <div class="search-container">
     <input type="text" id="search-bar" placeholder="Search...">
@@ -49,4 +46,10 @@
     </li>
     {% endfor %}
 </ul>
+{% endblock %}
+
+{% block footer %}
+<div>
+    <a href="{{ url_for('library.create_library_item') }}">add</a>
+</div>
 {% endblock %}

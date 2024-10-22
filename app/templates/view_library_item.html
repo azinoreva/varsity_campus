@@ -3,14 +3,14 @@
 {% block title %} {% endblock %}
 
 {% block navigation %}
-<!-- empty navigatio bar -->
+<!-- empty navigation bar -->
 {% endblock %}
 
 {% block content %}
 <h1>{{ item.title }}</h1>
 <p>{{ item.description }}</p>
 {% if item.file_path %}
- <iframe src="{{ url_for('static', filename='media/' + item.file_path) }}" width="600" height="400"></iframe>
+ <embed src="{{ url_for('static', filename='media/' + item.file_path) }}" width="600" height="400" type="application/pdf">
 {% else %}
 <p> no preview <p>
 {% endif %}

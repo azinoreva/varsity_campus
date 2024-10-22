@@ -3,11 +3,6 @@
 {% block title %}Posts{% endblock %}
 
 {% block navigation %}
-<div class="hamburger" id="hamburger">
-    <span></span>
-    <span></span>
-    <span></span>
-</div>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
@@ -15,7 +10,7 @@
                 <a class="nav-link" href="{{ url_for('dashboard.profile', user_id=current_user.id) }}">Profile</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('community.view_communities') }}">Community</a>
+                <a class="nav-link" href="{{ url_for('community.view_communities') }}"><img alt="community" src="{{ url_for('static', filename='images/community-32x32.png') }}"></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('courses.view_courses') }}">Courses</a>
@@ -30,18 +25,17 @@
 
 {% block content %}
 <h1>Recent Posts</h1>
-
-<!-- Search Bar -->
-<form action="{{ url_for('posts.search_posts') }}" method="GET" class="form-inline my-2 my-lg-0">
-    <input class="form-control mr-sm-2" type="search" name="q" placeholder="Search posts" aria-label="Search" required>
-    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-</form>
-
-<ul class="list-group mt-4">
+<ul class="list-group">
     {% for post in posts %}
     <li class="list-group-item">
-        <a href="{{ url_for('posts.view_a_post', post_id=post.id) }}">{{ post.title }}</a>
+        <a href="{{ url_for('posts.detail', post_id=post.id) }}">{{ post.title }}</a>
     </li>
     {% endfor %}
 </ul>
+{% endblock %}
+
+{% block footer %}
+<div>
+    <a href="{{ url_for('posts.create_post') }}">add</a>
+</div>
 {% endblock %}

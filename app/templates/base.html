@@ -53,6 +53,11 @@
         {% block content %}{% endblock %}
     </div>
 
+    {% block footer %}
+    <!-- empty footer -->
+    {% endblock %}
+
+
     <!-- jQuery and Bootstrap JS -->
     <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
