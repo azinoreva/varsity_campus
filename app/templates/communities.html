@@ -35,7 +35,7 @@
 <ul class="list-group">
     {% for community in communities %}
     {% if community %}
-    <li class="list-group-item" id="list-group-item">
+    <li class="list-group-item">
         <a href="{{ url_for('community.view_community_detail', community_id=community.id) }}">{{ community.name }}</a>
     </li>
     {% else %}
