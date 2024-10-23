@@ -56,32 +56,31 @@ def leave_community(community_id):
     flash(f'You have left the community: {community.name}')
     return redirect(url_for('community.view_communities'))
 
-# View specific community and its messages
+ # View specific community and its messages
 @community_bp.route('/community/<int:community_id>', methods=['GET', 'POST'])
 @login_required
 def view_community_detail(community_id):
     community = Community.query.get_or_404(community_id)
     messages = CommunityMessage.query.options(joinedload(CommunityMessage.user)).filter_by(community_id=community_id).all()
+
     # Handle posting a message
     if request.method == 'POST':
-        content = request.form.get('content')  # For text content
-        file = request.files.get('file')  # For media uploads (image, video, or file)
+        content = request.form.get('content')
+        file = request.files.get('file')
 
         if not content and not file:
             flash('You must provide either a message or a file.')
             return redirect(url_for('community.view_community_detail', community_id=community_id))
 
-        # If a file is uploaded, handle it (image/video/file)
         filename = None
         if file:
-            filename = utils.save_file(file)  # Assuming `save_file` is a utility function for saving files
+            filename = utils.save_file(file)
 
-        # Create and save the message
         new_message = CommunityMessage(
             user_id=current_user.id,
             community_id=community_id,
             message=content,
-            file_url=filename  # Set file if present
+            file_url=filename
         )
 
         db.session.add(new_message)
@@ -91,4 +90,3 @@ def view_community_detail(community_id):
         return redirect(url_for('community.view_community_detail', community_id=community_id))
 
     return render_template('inside_communities.html', community=community, messages=messages)
-

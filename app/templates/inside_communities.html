@@ -2,64 +2,52 @@
 
 {% block title %}Community: {{ community.name }}{% endblock %}
 
-{% block navigation %}
-<div class="darkmodeToggle" id="darkmodeToggle">
-    <i class="fa fa-moon" aria-hidden="true"></i>
-</div>
-<div class="hamburger" id="hamburger">
-    <span></span>
-    <span></span>
-    <span></span>
-</div>
-<nav class="navbar navbar-expand-lg navbar-light" id="navbar">
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('dashboard.profile', user_id=current_user.id) }}"><i class="fa fa-user" title="profile" aria-hidden="true"></i></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('courses.view_courses') }}"><i class="fa fa-graduation-cap" aria-hidden="true"></i></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('posts.create_post') }}"><i class="fa fa-pencil-square-o" title="posts" aria-hidden="true"></i></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('library.library') }}"><i class="fa fa-book" title="library" aria-hidden="true"></i></a>
-            </li>
-        </ul>
-    </div>
-</nav>
-{% endblock %}
-
 {% block content %}
-<h1>{{ community.name }}</h1>
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1>{{ community.name }}</h1>
+        <form action="{{ url_for('community.leave_community', community_id=community.id) }}" method="POST" class="d-inline" id="leave-community-form">
+            <button type="button" class="btn btn-danger btn-sm" id="leave-btn" title="Leave Community" onclick="confirmLeave()">
+                X
+            </button>
+        </form>
+    </div>
 
-<!-- Display messages in the community -->
-<div class="messages">
-    {% for message in messages %}
-        <div class="message">
-            <p><strong>{{ message.user.username }}</strong> ({{ message.created_at }}): </p>
-            <span>{{ message.message }}</span>
+    <!-- Display messages in the community -->
+    <div class="messages" id="message-area" style="overflow-y: auto; max-height: 70vh; padding-bottom: 70px;">
+        {% for message in messages %}
+        <div class="message mb-3">
+            <p><strong>{{ message.user.username }}</strong> ({{ message.created_at.strftime('%d/%m/%Y %H:%M') }}):</p>
+            <p>{{ message.message }}</p>
             {% if message.file_url %}
-                <p><img src="{{ url_for('static', filename='uploads/' ~ message.file_url) }}" alt="Media"></p>
+            <p>
+                <img src="{{ url_for('static', filename='uploads/' ~ message.file_url) }}" alt="Media" class="img-fluid">
+            </p>
             {% endif %}
         </div>
-    {% else %}
+        {% else %}
         <p>No messages in this community yet.</p>
-    {% endfor %}
+        {% endfor %}
+    </div>
+
+    <!-- Form to post new messages (fixed at the bottom) -->
+    <form action="{{ url_for('community.view_community_detail', community_id=community.id) }}" method="POST" enctype="multipart/form-data" class="position-fixed w-100 bottom-0 bg-white p-3" style="left: 0;">
+        <div class="form-group mb-2">
+            <textarea class="form-control" id="content" name="content" rows="1" placeholder="Type your message..."></textarea>
+        </div>
+        <div class="form-group mb-2">
+            <input type="file" class="form-control-file" id="file" name="file">
+        </div>
+        <button type="submit" class="btn btn-primary">Post</button>
+    </form>
 </div>
 
-<!-- Form to post new messages -->
-<form action="{{ url_for('community.view_community_detail', community_id=community.id) }}" method="POST" enctype="multipart/form-data">
-    <div class="form-group">
-        <label for="content">Post a message:</label>
-        <textarea class="form-control" id="content" name="content" rows="1"></textarea>
-    </div>
-    <div class="form-group">
-        <label for="file">Upload media (optional):</label>
-        <input type="file" class="form-control" id="file" name="file">
-    </div>
-    <button type="submit" class="btn btn-primary">Post</button>
-</form>
-
+<script>
+    // Confirm before leaving the community
+    function confirmLeave() {
+        if (confirm("Are you sure you want to leave this community?")) {
+            document.getElementById('leave-community-form').submit();
+        }
+    }
+</script>
 {% endblock %}
