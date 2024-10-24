@@ -86,3 +86,52 @@ header::after{
     opacity: 0.5;
     z-index: 0;
 }
+section{
+    width: 100%;
+    background-color: #073c85;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.about{
+    width: 70%;
+    margin-inline: auto;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.about>h1{
+    font-size: 2rem;
+    color: #fff;
+    margin-block: 20px;
+}
+.about>p{
+    font-size: 1rem;
+    margin-block: 10px;
+    color: #fff;
+    margin-block: 20px;
+}
+.about-btn{
+    margin-inline: auto;
+    width: 200px;
+    border: 2px solid #fff;
+    border-radius: 7px;
+}
+.about-btn>button{
+    font-size: 0.9rem;
+    padding: 10px;
+    width: 100%;
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+    background: transparent;
+    color: #fff;
+    
+}
+footer{
+    width: 100%;
+    background-color: #333;
+}
+footer >p {
+    text-align: center;
+    padding: 10px;
+    color: #fff;
+}
