@@ -60,7 +60,7 @@ class User(UserMixin, db.Model):
     roles = db.relationship('Role', secondary=user_roles, back_populates='users')
     messages = db.relationship('CommunityMessage', back_populates='user')
     posts = db.relationship('Post', backref='author', lazy='dynamic')
-    comments = db.relationship('Comment', backref='author', lazy='dynamic')
+    comments = db.relationship('Comment', backref='user', lazy='dynamic')
     sent_messages = db.relationship('Message',
                                     foreign_keys='Message.sender_id',
                                     backref='sender_user',

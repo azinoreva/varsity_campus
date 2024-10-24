@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %} {% endblock %}
+
+{% block navigation %}
+<!-- empty navigation -->
+{% endblock %}
+
+
+{% block content %}
+<div>
+    <a href="{{ url_for('posts.view_posts') }}"> &lt;= back</a>
+    <div>
+        <h1>{{ post.author.username }}</h1>
+        <p>{{ post.text }}</p>
+
+        {% if post.image %}
+        <img src="{{ url_for('static', filename='images/' + post.image) }}" width="600px" height="400px">
+        {% endif %}
+
+        <div>
+            <h3>comments</h3>
+            <ul class="list-group">
+                {% for comment in comments %}
+                <li class="list-group-item">
+                    <strong>{{ comment.user.username }}:</strong>
+                    <p>{{ comment.text }}</p>
+                    <small>Posted on {{ comment.timestamp.strftime('%H:%M') }}</small>
+                </li>
+                {% else %}
+                    <li class="list-group-item">No comments</li>
+                {% endfor %}
+            </ul>
+            
+        </div>
+    </div>
+</div>
+
+<div>
+    <form action="{{ url_for('posts.comment_post', post_id=post.id) }}" method="POST">
+        <textarea name="text" id="text" rows="1"></textarea>
+        <button type="submit">comment</button>
+    </form>
+</div>
+{% endblock %}

@@ -14,7 +14,6 @@ class Post(db.Model):
 
     # Relationships
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    community_id = db.Column(db.Integer, db.ForeignKey('communities.id'), nullable=False)
     likes = db.relationship('Like', backref='post', lazy=True)  # Likes for the post
     comments = db.relationship('Comment', backref='post', lazy=True)  # Comments on the post
     reposts = db.relationship('Repost', backref='post', lazy=True)  # Reposts
@@ -22,6 +21,9 @@ class Post(db.Model):
     def save_post(self):
         db.session.add(self)
         db.session.commit()
+
+    def total_likes(self):
+        return Like.query.filter_by(post_id=self.id).count()
 
 class Like(db.Model):
     __tablename__ = 'likes'
@@ -37,6 +39,7 @@ class Comment(db.Model):
     text = db.Column(db.String(500), nullable=False)  # Comment limited to 500 characters
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
 
+    # foreign keys
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     post_id = db.Column(db.Integer, db.ForeignKey('posts.id'), nullable=False)
 

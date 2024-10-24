@@ -1,50 +1,34 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/landing.css') }}">
+    <title>Mini Campus</title>
+</head>
+<body>
+    <header>
 
-{% block title %}Home{% endblock %}
+        <nav>
+            <div class="logo"><span>M</span>ini<span>C</span>ampus</div>
+            <ul>
+                <li><a href="">Register</a></li>
+                <li><a href="">Login</a></li>
+            </ul>
+        </nav>
+        <div class="theme">
+            <h1>Socialize and learn</h1>
+            <p>All in one place</p>
+        </div>
+        
+        <img src="{{ url_for('static', filename='/images/landing_page/landing.jpg') }}" alt="" srcset="">
+    </header>
+    <section>
+        about mini campus
+    </section>
+    <footer>
 
-{% block navigation %}
-<div class="darkmodeToggle" id="darkmodeToggle">
-    <i class="fa fa-moon" aria-hidden="true"></i>
-</div>
-<div class="hamburger" id="hamburger">
-    <span></span>
-    <span></span>
-    <span></span>
-</div>
-<nav class="navbar navbar-expand-lg navbar-light" id="navbar">
-    <a class="navbar-brand" href="{{ url_for('home.home') }}">Varsity App</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('auth.register') }}">Register</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('auth.login') }}">Login</a>
-            </li>
-        </ul>
-    </div>
-</nav>
-{% endblock %}
+    </footer>
 
-{% block content %}
-<h1>Welcome to Varsity App</h1>
-<h1>
-    <a href="{{ url_for('auth.login') }}">Login </a>or
-    <a href="{{ url_for('auth.register') }}">Register</a>
-</h1>
-<h2>Your one-stop platform for academic resources. It is a website designed to make a students's university life easier;
-    by compatmentalizing all the resources they need into one package. It comes with: a courses page, where
-    the student can view all his courses, a posts page, which lets a student add post, like comment and share other posts,
-    a library page that comes with a wide range of resources that are relevant to the student and so much more.
-</h2>
-<hr>
-<h2>Be sure to checkout this project's creators below:</h2>
-<h3><a href="www.linkedin.com/in/brian-kyalo-17a438243">Brian Kyalo</a></h3>
-<h3><a href="">Azino Oreva</a></h3>
-<h3><a href="">King Prosper</a></h3>
-<h3><a href="">Mohamed Yahaya</a></h3>
-
-{% endblock %}
+</body>
+</html>

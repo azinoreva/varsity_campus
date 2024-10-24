@@ -32,9 +32,21 @@
 <h1>Recent Posts</h1>
 <ul class="list-group">
     {% for post in posts %}
-    <li class="list-group-item">
-        <a href="{{ url_for('posts.detail', post_id=post.id) }}">{{ post.title }}</a>
-    </li>
+    <div>
+        <h3><a href="{{ url_for('dashboard.profile', user_id=post.user_id) }}">@{{ post.author.username }}</a></h3>
+        <p>{{ post.text }}</p>
+        {% if post.image %}
+        <img src="{{ url_for('static', filename='images/' + post.image) }}" width="600px" height="400px">
+        {% endif %}
+        <div>
+            <form action="{{ url_for('posts.like_post', post_id=post.id) }}" method="POST">
+                <button type="submit">like</button>
+            </form>
+            <span>{{ post.total_likes() }}</span>
+            <a href="{{ url_for('posts.view_a_post', post_id=post.id) }}">comment</a>
+            <a href="{{ url_for('posts.repost', post_id=post.id) }}">Repost</a>
+        </div>
+    </div>
     {% endfor %}
 </ul>
 {% endblock %}
