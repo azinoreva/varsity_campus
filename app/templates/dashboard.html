@@ -3,37 +3,30 @@
 {% block title %} {% endblock %}
 
 {% block navigation %}
-<div class="darkmodeToggle" id="darkmodeToggle">
-    <i class="fa fa-moon" aria-hidden="true"></i>
-</div>
-<div class="hamburger" id="hamburger">
-    <span></span>
-    <span></span>
-    <span></span>
-</div>
-<nav class="navbar navbar-expand-lg navbar-light" id="navbar">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('community.view_communities') }}"><i class="fa fa-users fa-lg" title="community" aria-hidden="true"></i></a>
+                <a class="nav-link" href="{{ url_for('community.view_communities') }}"><img alt="community" title="community" src="{{ url_for('static', filename='images/community-32x32.png') }}"></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('posts.create_post') }}"><i class="fa fa-plus-square fa-lg" title="posts" aria-hidden="true"></i></a>
+                <a class="nav-link" href="{{ url_for('posts.create_post') }}"><img alt="community" title="posts" src="{{ url_for('static', filename='images/posts-32x32.png') }}"></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('library.library') }}"><i class="fa fa-book fa-lg" title="library" aria-hidden="true"></i></a>
+                <a class="nav-link" href="{{ url_for('library.library') }}"><img alt="library" title="library" src="{{ url_for('static', filename='images/library-32x32.png') }}"></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('courses.view_courses') }}"><i class="fa fa-graduation-cap fa-lg" title="courses" aria-hidden="true"></i></a>
+                <a class="nav-link" href="{{ url_for('courses.view_courses') }}"><img alt="courses" title="courses" src="{{ url_for('static', filename='images/courses-32x32.png') }}"></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('auth.logout') }}"><i class="fa fa-sign-out fa-lg" title="logout" aria-hidden="true"></i></a>
+                <a class="nav-link" href="{{ url_for('auth.logout') }}"><img alt="logout" title="logout" src="{{ url_for('static', filename='images/logout-32x32.png') }}"></a>
             </li>
         </ul>
 </nav>
 {% endblock %}
 
 {% block content %} 
+<a href="/"></a>
 <h1>Welcome, {{ user.username }} </h1>
 
 <div>
@@ -46,20 +39,6 @@
 </div>
 
 <h2>profile</h2>
-
-<form method="POST" enctype='multipart/form-data'>
-    <div>
-        <label>Bio:</label>
-        <textarea name="bio" row=10 column=1>{{ user.bio }} </textarea>
-    </div>
-    <div>
-        <label  for="">choose image</label>
-        <input type="file" name="profile_image">
-    </div>
-    <div>
-        <button type="submit">update profile</button>
-    </div>
-    </form>
 
     <h2>your posts</h2>
     <!-- <ul>

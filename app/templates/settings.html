@@ -1,0 +1,25 @@
+{% extends 'base.html'%}
+
+{% block title %}
+{% endblock%}
+
+{% block navigation %}
+<a href="{{ url_for('auth.logout') }}">logout</a>
+<a href="{{ url_for('dashboard.profile') }}"> &lt;= back</a>
+{% endblock %}
+
+{% block content%}
+<form method="POST" enctype='multipart/form-data'>
+    <div>
+        <label>Bio:</label>
+        <textarea name="bio" row=10 column=1>{{ user.bio }} </textarea>
+    </div>
+    <div>
+        <label  for="">choose image:</label>
+        <input type="file" name="profile_image">
+    </div>
+    <div>
+        <button type="submit">update profile</button>
+    </div>
+</form>
+{% endblock %}
