@@ -17,6 +17,7 @@ from .routes.courses import courses_bp
 from .routes.lectures import lectures_bp
 from .routes.message import message_bp
 from .routes.library import library_bp
+from .routes.manage_users import manage_users_bp
 
 login_manager = LoginManager()
 
@@ -57,6 +58,7 @@ def create_app():
     app.register_blueprint(community_bp)
     app.register_blueprint(message_bp)
     app.register_blueprint(library_bp)
+    app.register_blueprint(manage_users_bp)
 
     return app
 

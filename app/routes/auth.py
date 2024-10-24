@@ -39,23 +39,30 @@ def register():
   return render_template('register.html')
 
 
-# Login Route
 @auth_bp.route('/login', methods=['GET', 'POST'])
 def login():
-  if request.method == 'POST':
-    email = request.form.get('email')
-    password = request.form.get('password')
+    if request.method == 'POST':
+        email = request.form.get('email')
+        password = request.form.get('password')
 
-    user = User.query.filter_by(email=email).first()
-    if user and check_password_hash(user.password_hash, password):
-      login_user(user)  # Log in the user
-      flash('Login successful!')
-      return redirect(url_for('courses.view_courses'))  # Redirect to home or dashboard
-    else:
-      flash('Invalid email or password. Please try again.')
-      return redirect(url_for('auth.login'))
+        # Find user by email
+        user = User.query.filter_by(email=email).first()
 
-  return render_template('login.html')
+        # Check if the user exists and the password is correct
+        if user and check_password_hash(user.password_hash, password):
+            login_user(user)  # Log in the user
+            flash('Login successful!')
+
+            # Redirect super admins to the admin page, regular users to courses
+            if user.is_super_admin():
+                return redirect(url_for('manage_users.manage_users'))  # Super admin redirection
+            else:
+                return redirect(url_for('courses.view_courses'))  # Regular users redirection
+        else:
+            flash('Invalid email or password. Please try again.')
+            return redirect(url_for('auth.login'))
+
+    return render_template('login.html')
 
 
 # Logout Route

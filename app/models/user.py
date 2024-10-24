@@ -100,7 +100,10 @@ class User(UserMixin, db.Model):
     def assign_lecturer(self, user):
         if self.is_super_admin():
             lecturer_role = Role.query.filter_by(name='Lecturer').first()
-            user.assign_role(lecturer_role)
+            if lecturer_role:
+                user.assign_role(lecturer_role)
+            else:
+                raise ValueError("Lecturer role does not exist.")
 
     def delete_post(self, post):
         if self.is_super_admin():
