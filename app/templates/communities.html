@@ -3,56 +3,8 @@
 {% block title %}Communities{% endblock %}
 
 {% block content %}
-<h1>Communities</h1>
-<<<<<<< HEAD
-
-<!-- Collapsible Button -->
-<div class="floating-btn">
-    <button class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#community-list">
-        Communities
-    </button>
-    <div id="community-list" class="collapse">
-        <ul class="list-group mt-2">
-            {% for community in communities %}
-                {% if community %}
-                    <li class="list-group-item">
-                       
-                        <a href="#" class="load-community" data-url="{{ url_for('community.view_community_detail', community_id=community.id) }}">
-                            {{ community.name }}
-                        </a>
-                    </li>
-                {% else %}
-                    <h2>No active community</h2>
-                {% endif %}
-            {% endfor %}
-        </ul>
-    </div>
-</div>
-
-
-<div class="iframe-container mt-4">
-    <iframe id="community-iframe" src="" frameborder="0" style="width: 100%; height: 70vh;"></iframe>
-</div>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Select all community links with the class 'load-community'
-        const communityLinks = document.querySelectorAll('.load-community');
-
-        communityLinks.forEach(link => {
-            link.addEventListener('click', function (e) {
-                e.preventDefault(); // Prevent the default link action
-
-                const url = this.getAttribute('data-url'); // Get the data-url of the clicked community
-
-                // Update the iframe source to load the content
-                document.getElementById('community-iframe').src = url;
-            });
-        });
-    });
-</script>
-
-=======
-<ul class="list-group">
+<h1 class="heading">Communities</h1>
+<ul class="list-group" id="list-group">
     {% for community in communities %}
     {% if community %}
     <li class="list-group-item">
@@ -63,5 +15,4 @@
     {% endif %}
     {% endfor %}
 </ul>
->>>>>>> 9d933f8b4b4a8bb23c9e5ae0ff73ca748ec10074
 {% endblock %}

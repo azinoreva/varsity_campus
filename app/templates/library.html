@@ -2,57 +2,22 @@
 
 {% block title %}Library{% endblock %}
 
-{% block navigation %}
-<div class="darkmodeToggle" id="darkmodeToggle">
-    <i class="fa fa-moon" aria-hidden="true"></i>
-</div>
-<div class="hamburger" id="hamburger">
-    <span></span>
-    <span></span>
-    <span></span>
-</div>
-<nav class="navbar navbar-expand-lg navbar-light" id="navbar">
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('dashboard.profile', user_id=current_user.id) }}"><i class="fa fa-user fa-lg" title="profile" aria-hidden="true"></i></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('community.view_communities') }}"><i class="fa fa-users fa-lg" title="community" aria-hidden="true"></i></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('posts.create_post') }}"><i class="fa fa-plus-square fa-lg" title="posts" aria-hidden="true"></i></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('courses.view_courses') }}"><i class="fa fa-graduation-cap fa-lg" title="courses" aria-hidden="true"></i></a>
-            </li>
-        </ul>
-    </div>
-</nav>
-{% endblock %}
-
-
-
-
 {% block content %}
 
-<div class="search-container">
-    <input type="text" id="search-bar" placeholder="Search...">
+<div class="search-container" id="search-container">
+    <input type="text" class="" id="search-bar" placeholder="Search...">
     <span class="search-icon">🔍</span>
 </div>
-<h1>Library</h1>
+<div class="add-icon">
+    <a href="{{ url_for('library.create_library_item') }}"><i class="fa fa-plus fa-2x" aria-hidden="true"></i></a>
+</div>
+<h1 class="heading">Library</h1>
 <ul class="list-group">
     {% for item in library_items %}
     <li class="list-group-item">
-        <strong>{{ item.title }}</strong> - {{ item.type }}
+        <strong>{{ item.title }}</strong>
         <a href="{{ url_for('library.view_library_item', item_id=item.id) }}" class="btn btn-info btn-sm">View</a>
     </li>
     {% endfor %}
 </ul>
-{% endblock %}
-
-{% block footer %}
-<div>
-    <a href="{{ url_for('library.create_library_item') }}">add</a>
-</div>
 {% endblock %}

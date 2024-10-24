@@ -1,23 +1,10 @@
-// $(document).ready(function() {
-//     console.log("Document ready!");
-//     // Additional JS functionalities can go here
-// });
-
-// A function to toggle the open on hambuger and nav
-// const hamburger = document.getElementById('hamburger');
-// const navbar = document.getElementById('navbar');
-
-// hamburger.addEventListener('click', () => {
-//     navbar.classList.toggle('open');
-// });
-
 // A function to toggle light and darkmode
 const darkmodeToggle = document.getElementById('darkmodeToggle');
 const body = document.getElementById('body');
-const listGroupItem = document.getElementById('list-group-item');
 const offcanvasExample = document.getElementById('offcanvasExample');
 const hamburger = document.getElementById('hamburger');
 const searchBar = document.getElementById('search-bar');
+const listGroupItems = document.querySelectorAll('.list-group-item');
 
 const currentTheme = localStorage.getItem('theme');
 
@@ -35,9 +22,10 @@ function toggleMode() {
         searchBar.classList.toggle('dark-mode');
     }
 
-    if (listGroupItem) {
-        listGroupItem.classList.toggle('dark-mode');
-    }
+    listGroupItems.forEach((item) => {
+        item.classList.toggle('dark-mode');
+    })
+    
 }
 
 darkmodeToggle.addEventListener('click', () => {
