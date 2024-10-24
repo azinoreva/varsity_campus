@@ -4,17 +4,20 @@
 // });
 
 // A function to toggle the open on hambuger and nav
-const hamburger = document.getElementById('hamburger');
-const navbar = document.getElementById('navbar');
+// const hamburger = document.getElementById('hamburger');
+// const navbar = document.getElementById('navbar');
 
-hamburger.addEventListener('click', () => {
-    navbar.classList.toggle('open');
-});
+// hamburger.addEventListener('click', () => {
+//     navbar.classList.toggle('open');
+// });
 
 // A function to toggle light and darkmode
 const darkmodeToggle = document.getElementById('darkmodeToggle');
 const body = document.getElementById('body');
 const listGroupItem = document.getElementById('list-group-item');
+const offcanvasExample = document.getElementById('offcanvasExample');
+const hamburger = document.getElementById('hamburger');
+const searchBar = document.getElementById('search-bar');
 
 const currentTheme = localStorage.getItem('theme');
 
@@ -26,9 +29,13 @@ function toggleMode() {
     body.classList.toggle('dark-mode');
     darkmodeToggle.classList.toggle('dark-mode');
     hamburger.classList.toggle('dark-mode');
-    navbar.classList.toggle('dark-mode');
+    offcanvasExample.classList.toggle('dark-mode');
 
-    if (listGroupItem !== null) {
+    if (searchBar) {
+        searchBar.classList.toggle('dark-mode');
+    }
+
+    if (listGroupItem) {
         listGroupItem.classList.toggle('dark-mode');
     }
 }

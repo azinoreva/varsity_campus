@@ -41,6 +41,13 @@ body {
     z-index: 2;
 }
 
+.navbar-nav .nav-item a {
+    color: #333;
+}
+
+.navbar-nav .nav-item i {
+    padding-right: 10px;
+}
 .navbar {
     position: absolute;
     top: 0;
@@ -99,14 +106,33 @@ body {
     background-color: #B0DAF1;
 }
 
-.navbar.dark-mode {
+.offcanvas.dark-mode {
     background-color: #011C27;
 }
 
-.navbar.dark-mode i {
+.offcanvas.dark-mode i {
     color: #B0DAF1;
+}
+
+.offcanvas.dark-mode span {
+    color: #B0DAF1;
+}
+
+.offcanvas.dark-mode button {
+    background-color: #B0DAF1;
 }
 
 .list-group-item.dark-mode {
     background-color: #011C27;
+}
+
+#search-bar.dark-mode {
+    background-color: #03254E;
+    color: #B0DAF1;
+    border: 1px solid #B0DAF1;
+    border-radius: 2px;
+}
+
+#search-bar.dark-mode::placeholder {
+    color: #B0DAF1;
 }
