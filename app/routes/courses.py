@@ -4,6 +4,8 @@ from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask_login import login_required, current_user
 from .. import db
 from ..models import Course
+from datetime import datetime
+
 
 # Blueprint for course manager
 courses_bp = Blueprint('courses', __name__)

@@ -88,6 +88,7 @@ def comment_post(post_id):
     db.session.commit()
     return redirect(url_for('posts.view_a_post', post_id=post_id))
 
+
 # Repost functionality
 @posts_bp.route('/post/<int:post_id>/repost', methods=['POST'])
 @login_required

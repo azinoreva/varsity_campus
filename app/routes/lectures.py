@@ -16,7 +16,7 @@ def view_lectures():
         flash('Only lecturers can view this page.')
         return redirect(url_for('home'))
     lectures = Lecture.query.filter_by(lecturer_id=current_user.id).all()
-    return render_template('lectures/view_lectures.html', lectures=lectures)
+    return render_template('view_lectures.html', lectures=lectures)
 
 # Add a new lecture (only lecturers)
 @lectures_bp.route('/lectures/create', methods=['GET', 'POST'])

@@ -21,11 +21,12 @@
     <h3>{{ user.username|capitalize }} </h3>
     <small>{{ user.bio }}</small>
     <small>{{ user.email }}</small>
+    <p>{{ user.roles.users }}</p>
 </div>
 
 
 {% if current_user != user %}  <!-- Check if the logged-in user is not the same as the viewed user -->
-{% if current_user.friends.filter_by(id=user.id).first() %}
+    {% if current_user.friends.filter_by(id=user.id).first() %}
         <form method="POST">
             <button type="submit">Unfriend</button>
         </form>

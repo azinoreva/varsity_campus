@@ -1,5 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}{% endblock%}
+
+{% block navigation %}
+<a href="{{ url_for('dashboard.friend') }}"><i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i></a>
+{% endblock%}
+
+{% block content %}
+
+
 {% for message in messages %}
-    <p>{{ message.sender.username }}: {{ message.content }}</p>
+    <strong>{{ message.sender.username }}</strong>: {{ message.content }}
 {% endfor %}
 
 <form action="{{ url_for('message.send_message', user_id=user.id) }}" method="POST" enctype="multipart/form-data">
@@ -11,3 +22,6 @@
     <input type="file" name="attachment">
     <button type="submit">Send</button>
 </form>
+{% endblock %}
+
+
