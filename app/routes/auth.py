@@ -72,3 +72,8 @@ def logout():
   logout_user()  # Log out the current user
   flash('You have been logged out.')
   return redirect(url_for('auth.login'))  # Redirect to login page
+
+@auth_bp.route('/account_settings')
+@login_required
+def account_settings():
+  return render_template('settings.html')

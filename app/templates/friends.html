@@ -1,0 +1,16 @@
+{% extends 'base.html'%}
+
+{% block title%} {% endblock %}
+
+{% block content %}
+<ul class="list-group">
+    {% for friend in friends %}
+    <li class="list-group-item">
+        <strong>{{ friend.username }}</strong>
+        <a href="{{ url_for('message.view_direct_messages', user_id=friend.id) }}" class="btn btn-info btn-sm">message</a>
+    </li>
+    {% else %}
+        <li class="list-group-item">No friends added yet.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

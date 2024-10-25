@@ -1,30 +1,47 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash, jsonify
 from flask_login import login_required, current_user
-from ..models import Message, User, Channel
+from ..models import Message, User, Channel, ChatRoom
 from .. import db
 
 #Blueprint for message
 message_bp = Blueprint ('message', __name__) 
+
+
+def get_or_create_chat_room(user1_id, user2_id):
+    # Ensure chat rooms are unique between two users regardless of the order
+    chat_room = ChatRoom.query.filter(
+        ((ChatRoom.user1_id == user1_id) & (ChatRoom.user2_id == user2_id)) |
+        ((ChatRoom.user1_id == user2_id) & (ChatRoom.user2_id == user1_id))
+    ).first()
+
+    if not chat_room:
+        # If no chat room exists, create a new one
+        chat_room = ChatRoom(user1_id=user1_id, user2_id=user2_id)
+        db.session.add(chat_room)
+        db.session.commit()
+
+    return chat_room
+
 # Send a direct message
-@message_bp.route('/message/send', methods=['POST'])
+@message_bp.route('/send_message/<int:user_id>', methods=['POST'])
 @login_required
-def send_message():
+def send_message(user_id):
     receiver_id = request.form.get('receiver_id')
+    user = User.query.get_or_404(user_id)
     content = request.form.get('content')
 
-    if not content:
-        return jsonify({'error': 'Message content is required'}), 400
+    # Check if the user is a friend
+    if user not in current_user.friends:
+        flash("You can only send messages to friends.", "danger")
+        return redirect(url_for('dashboard.friends'))
 
-    # Check if the receiver exists
-    receiver = User.query.get(receiver_id)
-    if not receiver:
-        return jsonify({'error': 'Receiver does not exist'}), 404
+    chat_room = get_or_create_chat_room(current_user.id, receiver_id)
 
-    message = Message(sender_id=current_user.id, receiver_id=receiver_id, content=content)
+    message = Message(sender_id=current_user.id, receiver_id=receiver_id, content=content, chat_room_id=chat_room.id)
     db.session.add(message)
     db.session.commit()
 
-    return jsonify({'message': 'Message sent successfully'}), 200
+    return redirect(url_for('message.view_direct_messages', user_id=receiver_id))
 
 # Send a message to a group (channel)
 @message_bp.route('/message/channel/<int:channel_id>/send', methods=['POST'])
@@ -62,11 +79,14 @@ def view_channel_messages(channel_id):
 def view_direct_messages(user_id):
     user = User.query.get_or_404(user_id)
 
+    if user not in current_user.friends:
+        flash("You can only message friends.", "danger")
+        return redirect(url_for('dashboard.friends'))
+    
+    chat_room = get_or_create_chat_room(current_user.id, user_id)
+
     # Fetch direct messages between the current user and the selected user
-    messages = Message.query.filter(
-        (Message.sender_id == current_user.id) & (Message.receiver_id == user_id) |
-        (Message.sender_id == user_id) & (Message.receiver_id == current_user.id)
-    ).all()
+    messages = Message.query.filter_by(chat_room_id=chat_room.id).order_by(Message.sent_at.asc()).all()
 
     return render_template('direct_messages.html', messages=messages, user=user)
 

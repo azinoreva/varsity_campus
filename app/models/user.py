@@ -73,6 +73,7 @@ class User(UserMixin, db.Model):
                               secondary='friends',
                               primaryjoin='User.id==friends.c.user_id',
                               secondaryjoin='User.id==friends.c.friend_id',
+                              backref='friend_of',
                               lazy='dynamic')
 
     def set_password(self, password):
@@ -122,3 +123,14 @@ friends = db.Table(
               db.Integer,
               db.ForeignKey('users.id'),
               primary_key=True))
+
+# class FriendRequest(db.Model):
+#     __tablename__ = 'friend_requests'
+    
+#     id = db.Column(db.Integer, primary_key=True)
+#     sender_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+#     receiver_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+#     accepted = db.Column(db.Boolean, default=False)
+
+#     sender = db.relationship('User', foreign_keys=[sender_id])
+#     receiver = db.relationship('User', foreign_keys=[receiver_id])

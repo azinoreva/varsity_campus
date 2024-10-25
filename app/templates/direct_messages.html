@@ -1,0 +1,13 @@
+{% for message in messages %}
+    <p>{{ message.sender.username }}: {{ message.content }}</p>
+{% endfor %}
+
+<form action="{{ url_for('message.send_message', user_id=user.id) }}" method="POST" enctype="multipart/form-data">
+    <textarea name="content" placeholder="Write your message" required></textarea>
+    
+    <!-- Pass the receiver_id as a hidden input -->
+    <input type="hidden" name="receiver_id" value="{{ user.id }}">
+    
+    <input type="file" name="attachment">
+    <button type="submit">Send</button>
+</form>

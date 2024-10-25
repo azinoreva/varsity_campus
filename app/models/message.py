@@ -12,6 +12,7 @@ class Message(db.Model):
     sender_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     receiver_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)  # For direct messages
     channel_id = db.Column(db.Integer, db.ForeignKey('channels.id'), nullable=True)  # For group messages (channels)
+    chat_room_id = db.Column(db.Integer, db.ForeignKey('chat_room.id'), nullable=False)
     content = db.Column(db.Text, nullable=False)
     encrypted_content = db.Column(db.Text, nullable=False)
     sent_at = db.Column(db.DateTime, default=datetime.utcnow)
@@ -22,11 +23,13 @@ class Message(db.Model):
     sender = db.relationship('User', foreign_keys=[sender_id], overlaps='sender_user, sent_messages')
     receiver = db.relationship('User', foreign_keys=[receiver_id], overlaps='receiver_user, received_messages')
     channel = db.relationship('Channel', backref='channel_messages', lazy='select')
+    chat_room = db.relationship('ChatRoom', backref='messages')
 
-    def __init__(self, sender_id, receiver_id=None, channel_id=None, content=""):
+    def __init__(self, sender_id, receiver_id=None, channel_id=None, chat_room_id=None, content=""):
         self.sender_id = sender_id
         self.receiver_id = receiver_id
         self.channel_id = channel_id
+        self.chat_room_id = chat_room_id
         self.content = content
         self.encrypted_content = self.encrypt_message(content)
 
@@ -45,6 +48,14 @@ class Message(db.Model):
             raise ValueError("Encryption key (FERNET_KEY) not found in environment variables.")
         f = Fernet(key.encode())
         return f.decrypt(encrypted_content.encode('utf-8')).decode('utf-8')
+    
+class ChatRoom(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user1_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    user2_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    
+    user1 = db.relationship('User', foreign_keys=[user1_id])
+    user2 = db.relationship('User', foreign_keys=[user2_id])
 
 class Reaction(db.Model):
     __tablename__ = 'reactions'
