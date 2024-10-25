@@ -34,3 +34,14 @@ darkmodeToggle.addEventListener('click', () => {
     const theme = darkmodeToggle.classList.contains('dark-mode') ? 'dark' : 'light';
     localStorage.setItem('theme', theme);
 })
+
+// Indicates whether a file is selected or not
+document.getElementById('image').addEventListener('change', function() {
+    const icon = document.getElementById('attach-icon');
+
+    if (this.files.length > 0) {
+        icon.classList.toggle('file-selected');
+    } else {
+        icon.classList.remove('file-selected');
+    }
+})

@@ -20,26 +20,30 @@
 
         <div>
             <h3>comments</h3>
-            <ul class="list-group">
+            <ul class="list-group comments-container">
                 {% for comment in comments %}
-                <li class="list-group-item">
-                    <strong>{{ comment.user.username }}:</strong>
+                <li class="comment-item">
+                    <strong id="username">{{ comment.user.username }}</strong>
                     <p>{{ comment.text }}</p>
-                    <small>Posted on {{ comment.timestamp.strftime('%H:%M') }}</small>
+                    <small id="time">{{ comment.timestamp.strftime('%H:%M') }}</small>
                 </li>
                 {% else %}
                     <li class="list-group-item">No comments</li>
                 {% endfor %}
+                <form action="{{ url_for('posts.comment_post', post_id=post.id) }}" method="POST">
+                    <textarea name="text" id="text" rows="1"></textarea>
+                    <button type="submit">comment</button>
+                </form>
             </ul>
             
         </div>
     </div>
 </div>
 
-<div>
+<!-- <div>
     <form action="{{ url_for('posts.comment_post', post_id=post.id) }}" method="POST">
         <textarea name="text" id="text" rows="1"></textarea>
         <button type="submit">comment</button>
     </form>
-</div>
+</div> -->
 {% endblock %}

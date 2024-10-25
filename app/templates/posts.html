@@ -4,6 +4,24 @@
 
 {% block content %}
 <ul class="list-group posts-container">
+    <div class="container mt-5 create-post-container">
+        <form class="post-form-container" action="{{ url_for('posts.create_post') }}" method="POST" enctype="multipart/form-data">
+            <!-- <div class="form-group">
+                <label for="title">Post Title</label>
+                <input type="text" class="form-control" id="title" name="title" required>
+            </div> -->
+            <div class="form-group-1">
+                <textarea class="form-control" id="content" name="text" rows="1" required placeholder="Share something..."></textarea>
+            </div>
+            <div class="form-group-2">
+                <label for="image" class="attach-label">
+                    <i id="attach-icon" class="fas fa-paperclip"></i>
+                </label>
+                <input type="file" class="form-control-file" id="image" name="image">
+            </div>
+            <button type="submit" class=""><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+        </form>
+    </div>
     {% for post in posts %}
     <div class="post">
         <h5><a href="{{ url_for('dashboard.profile', user_id=post.user_id) }}">@{{ post.author.username }}</a></h5>
@@ -25,7 +43,7 @@
 {% endblock %}
 
 {% block footer %}
-<div class="posts-footer">
+<!-- <div class="posts-footer">
     <a href="{{ url_for('posts.create_post') }}"><i class="fa fa-plus-square fa-2x" title="Post" aria-hidden="true"></i></a>
-</div>
+</div> -->
 {% endblock %}
