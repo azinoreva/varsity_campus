@@ -185,3 +185,66 @@ body {
     transform: translateY(-2px);
     color: blueviolet;
 }
+
+/* Posts */
+.posts-container {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+}
+
+.posts-container .post {
+    width: 50%;
+    border: 1px solid grey;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.posts-container .post img {
+    width: 100%;
+}
+
+.posts-container .post button {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    color: red;
+}
+
+.posts-container .post form {
+    display: inline;
+}
+
+.posts-container .post .reaction-container span {
+    margin-right: 5px;
+}
+
+.posts-container .post h5 a {
+    text-decoration: none;
+}
+
+.posts-footer {
+    position: sticky;
+    bottom: 30px;
+    margin-left: 30px;
+}
+
+@media (max-width: 700px) {
+    .posts-container .post {
+        width: 100%;
+    }
+
+    .posts-footer {
+        bottom: 5px;
+        margin-left: 47%;
+    }
+}
+
+/* Create Post */
+.create-post-container {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+}

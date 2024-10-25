@@ -3,25 +3,21 @@
 {% block title %}Posts{% endblock %}
 
 {% block content %}
-<div class="add-icon">
-    <a href="{{ url_for('posts.create_post') }}"><i class="fa fa-plus fa-2x" aria-hidden="true"></i></a>
-</div>
-<h1>Recent Posts</h1>
-<ul class="list-group">
+<ul class="list-group posts-container">
     {% for post in posts %}
-    <div>
-        <h3><a href="{{ url_for('dashboard.profile', user_id=post.user_id) }}">@{{ post.author.username }}</a></h3>
+    <div class="post">
+        <h5><a href="{{ url_for('dashboard.profile', user_id=post.user_id) }}">@{{ post.author.username }}</a></h5>
         <p>{{ post.text }}</p>
         {% if post.image %}
         <img src="{{ url_for('static', filename='images/' + post.image) }}" width="600px" height="400px">
         {% endif %}
-        <div>
+        <div class="reaction-container">
             <form action="{{ url_for('posts.like_post', post_id=post.id) }}" method="POST">
-                <button type="submit">like</button>
+                <button type="submit"><i class="fa fa-heart" aria-hidden="true"></i></button>
             </form>
             <span>{{ post.total_likes() }}</span>
-            <a href="{{ url_for('posts.view_a_post', post_id=post.id) }}">comment</a>
-            <a href="{{ url_for('posts.repost', post_id=post.id) }}">Repost</a>
+            <a href="{{ url_for('posts.view_a_post', post_id=post.id) }}"><i class="fa fa-comments" aria-hidden="true"></i></a>
+            <a href="{{ url_for('posts.repost', post_id=post.id) }}"><i class="fa fa-retweet" aria-hidden="true"></i></a>
         </div>
     </div>
     {% endfor %}
@@ -29,7 +25,7 @@
 {% endblock %}
 
 {% block footer %}
-<div>
-    <a href="{{ url_for('posts.create_post') }}">add</a>
+<div class="posts-footer">
+    <a href="{{ url_for('posts.create_post') }}"><i class="fa fa-plus-square fa-2x" title="Post" aria-hidden="true"></i></a>
 </div>
 {% endblock %}
