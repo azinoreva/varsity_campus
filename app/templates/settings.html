@@ -4,11 +4,12 @@
 {% endblock%}
 
 {% block navigation %}
-<a href="{{ url_for('auth.logout') }}">logout</a>
-<a href="{{ url_for('dashboard.profile', user_id=current_user.id) }}"> &lt;= back</a>
+
+<a href="{{ url_for('dashboard.profile', user_id=current_user.id) }}"><i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i></a>
 {% endblock %}
 
 {% block content%}
+<a href="{{ url_for('auth.logout') }}">logout</a>
 <form action="{{ url_for('dashboard.profile', user_id=current_user.id) }}" method="POST" enctype='multipart/form-data'>
     <div>
         <label>Bio:</label>

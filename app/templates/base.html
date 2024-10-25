@@ -48,7 +48,7 @@
                             <a class="nav-link" href="{{ url_for('posts.view_posts') }}"><i class="fa fa-plus-square fa-2x" title="posts" aria-hidden="true"></i><span>Posts</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('message.view_direct_messages', user_id=current_user.id) }}"><i class="fa fa-comment fa-2x" title="messages" aria-hidden="true"></i><span>Messages</span></a>
+                            <a class="nav-link" href="{{ url_for('dashboard.friend') }}""><i class="fa fa-comment fa-2x" title="messages" aria-hidden="true"></i><span>Messages</span></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url_for('community.view_communities') }}"><i class="fa fa-users fa-2x" title="community" aria-hidden="true"></i><span>Communities</span></a>

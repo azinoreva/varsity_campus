@@ -2,19 +2,27 @@
 
 {% block title %} {% endblock %}
 
-{% block content %} 
-<a href="{{ url_for('auth.account_settings') }}">settings</a>
-<h1>Welcome, {{ user.username }} </h1>
+{% block content %}
+<div class="d-flex justify-content-between align-items-center">
+    <h2>profile</h2>
+    <a href="{{ url_for('auth.account_settings') }}"><i class="fas fa-cog fa-2x"></i></a>
+</div>
 
-<div>
-    <label>profile picture:</label>
+
+<div class="d-flex justify-content-center align-items-center" style="height: 200px;;">
     {% if user.profile_image %}
-    <img src="{{ url_for('static', filename='images/' + user.profile_image) }}" style="width:100px;">
+    <img src="{{ url_for('static', filename='images/' + user.profile_image) }}" class="rounded-circle" style="width: 150px; height: 150px; border:3px solid red;">
     {% else %}
     <p> no profile picure </p>
-    {% endif %}
-    <p>{{ user.bio }}</p>
+{% endif %}
 </div>
+
+<div class="d-flex flex-column justify-content-center align-items-center">
+    <h3>{{ user.username|capitalize }} </h3>
+    <small>{{ user.bio }}</small>
+    <small>{{ user.email }}</small>
+</div>
+
 
 {% if current_user != user %}  <!-- Check if the logged-in user is not the same as the viewed user -->
 {% if current_user.friends.filter_by(id=user.id).first() %}
@@ -29,5 +37,5 @@
 {% endif %}
 
 <a href="{{ url_for('dashboard.friend') }}">friends</a>
-<h2>profile</h2>
+
 {% endblock %}

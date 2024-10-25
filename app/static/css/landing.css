@@ -57,12 +57,13 @@ header{
     right: 0;
     transform: translate(-100%,-500%);
     bottom: 0;
+    text-align: center;
 }
 .theme > h1{
     font-size: 3rem;
     color: #fff;
 }
-.theme > p{
+.theme > h3{
     font-size: 0.9rem;
     color: #fff;
     padding-left: 25px;
@@ -72,8 +73,8 @@ header > img {
     height: 100%;
     object-fit: cover;
     position: absolute;
-   inset: 0;
-   z-index: -1;
+    inset: 0;
+    z-index: -1;
    
 }
 header::after{
@@ -91,23 +92,27 @@ section{
     background-color: #073c85;
     padding-top: 10px;
     padding-bottom: 10px;
+    margin: 25px 0;
 }
 .about{
     width: 70%;
     margin-inline: auto;
     text-align: center;
-    margin-bottom: 20px;
+    margin-block: 20px;
+    padding-bottom: 20px;
 }
 .about>h1{
     font-size: 2rem;
     color: #fff;
     margin-block: 20px;
+    text-transform: capitalize;
 }
 .about>p{
     font-size: 1rem;
     margin-block: 10px;
     color: #fff;
     margin-block: 20px;
+    padding: 0 15px;
 }
 .about-btn{
     margin-inline: auto;
@@ -124,7 +129,7 @@ section{
     cursor: pointer;
     background: transparent;
     color: #fff;
-    
+    text-transform: capitalize;
 }
 footer{
     width: 100%;
@@ -134,4 +139,17 @@ footer >p {
     text-align: center;
     padding: 10px;
     color: #fff;
+}
+
+@media only screen and (max-width: 768px) {
+    nav{
+        width: 100%;
+        border-radius: 0px;
+    }
+    ul{
+        width: 40%;
+    }
+    .theme{
+        transform: translate(-16%,-500%);
+    }
 }

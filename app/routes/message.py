@@ -33,7 +33,7 @@ def send_message(user_id):
     # Check if the user is a friend
     if user not in current_user.friends:
         flash("You can only send messages to friends.", "danger")
-        return redirect(url_for('dashboard.friends'))
+        return redirect(url_for('dashboard.friend'))
 
     chat_room = get_or_create_chat_room(current_user.id, receiver_id)
 
@@ -81,7 +81,7 @@ def view_direct_messages(user_id):
 
     if user not in current_user.friends:
         flash("You can only message friends.", "danger")
-        return redirect(url_for('dashboard.friends'))
+        return redirect(url_for('dashboard.friend'))
     
     chat_room = get_or_create_chat_room(current_user.id, user_id)
 
