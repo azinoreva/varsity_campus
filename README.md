@@ -5,8 +5,8 @@ MiniCampus application is an innovative academic application designed to enhance
 
 1. **The students(Users) can have:-**
 
-* Access to courses
-* Access to library (Digital learning materials shared by the instructors/lecturers)
+  * Access to courses
+  * Access to library (Digital learning materials shared by the instructors/lecturers)
 * Receives important notifications posted by the instructors/lectureres
 * The students/Users can easily communicate with each other and other members using the *in-app messaging*. You can chat in real-time and get feedback instanly, and this is applied to all users that can log-in. The message is encrypted, even the developers can not read the ongoing communication.
 * Ability to add friend(s)
