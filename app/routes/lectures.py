@@ -3,7 +3,8 @@
 from flask import Blueprint, request, render_template, redirect, url_for, flash
 from flask_login import login_required, current_user
 from .. import db
-from ..models import Lecture, User
+from ..models import Lecture, User, LectureVideo, LectureDocument, Notification, Assignment, lecture_students
+import json
 
 # Blueprint for lectures
 lectures_bp = Blueprint('lectures', __name__)
@@ -14,60 +15,56 @@ lectures_bp = Blueprint('lectures', __name__)
 def view_lectures():
     if not current_user.has_role('Lecturer'):
         flash('Only lecturers can view this page.')
-        return redirect(url_for('home'))
+        return redirect(url_for('courses'))
     lectures = Lecture.query.filter_by(lecturer_id=current_user.id).all()
-    return render_template('view_lectures.html', lectures=lectures)
+    return render_template('lectures/view_lectures.html', lectures=lectures)
 
 # Add a new lecture (only lecturers)
-@lectures_bp.route('/lectures/create', methods=['GET', 'POST'])
+@lectures_bp.route('/lectures/create', methods=['GET','POST'])
 @login_required
 def create_lecture():
+    # Only allow lecturers to create a lecture or add resources
     if not current_user.has_role('Lecturer'):
-        flash('Only lecturers can create lectures.')
+        flash('Only lecturers can create or manage lectures.')
         return redirect(url_for('home'))
+
     if request.method == 'POST':
         title = request.form['title']
         description = request.form['description']
+        student_emails = request.form['studentEmails']
+        lecture_id = request.form['lecture_id']
+        # video_url=request.form['video_url']
+        # document_path=request.form['document_path']
+
+        student_email_list = [mail.strip() for mail in student_emails.split(',')]
+
+        for email in student_email_list:
+            student = User.query.filter_by(email=email).first()
+            if student:
+                    # Check if the student is already associated with this lecture to avoid duplicates
+                    exists = db.session.query(lecture_students).filter_by(
+                    student_id=student.id, lecture_id=lecture_id).first()
+                    if not exists:
+                        # If the association does not exist, add it to lecture_students table
+                        stmt = lecture_students.insert().values(
+                            student_id=student.id, lecture_id=lecture_id
+                        )
+                        db.session.execute(stmt)
+        
+        lecture = Lecture.query.get_or_404(lecture_id)
         new_lecture = Lecture(title=title, description=description, lecturer_id=current_user.id)
+        # video = LectureVideo(video_url, lecture_id=lecture.id)
+        # document = LectureDocument(document_path, lecture_id=lecture.id)
+
         db.session.add(new_lecture)
         db.session.commit()
-        flash('Lecture created successfully.')
+        flash('lecture created successfully.')
+
         return redirect(url_for('lectures.view_lectures'))
+
+    # Render the create_lecture template if it's a GET request
     return render_template('lectures/create_lecture.html')
 
-# Add a student to a lecture
-@lectures_bp.route('/lectures/<int:lecture_id>/add_student', methods=['POST'])
-@login_required
-def add_student_to_lecture(lecture_id):
-    if not current_user.has_role('Lecturer'):
-        flash('Only lecturers can add students to lectures.')
-        return redirect(url_for('home'))
-    lecture = Lecture.query.get_or_404(lecture_id)
-    student_email = request.form['email']
-    student = User.query.get(student_email)
-    if student:
-        lecture.students.append(student)
-        db.session.commit()
-        flash('Student added to lecture.')
-    return redirect(url_for('lectures.view_lectures'))
-
-# Add video or document to a lecture
-@lectures_bp.route('/lectures/<int:lecture_id>/add_resource', methods=['POST'])
-@login_required
-def add_resource_to_lecture(lecture_id):
-    if not current_user.has_role('Lecturer'):
-        flash('Only lecturers can add resources to lectures.')
-        return redirect(url_for('home'))
-    lecture = Lecture.query.get_or_404(lecture_id)
-    if 'video_url' in request.form:
-        video = LectureVideo(video_url=request.form['video_url'], lecture_id=lecture.id)
-        db.session.add(video)
-    if 'document_path' in request.form:
-        document = LectureDocument(document_path=request.form['document_path'], lecture_id=lecture.id)
-        db.session.add(document)
-    db.session.commit()
-    flash('Resource added to lecture.')
-    return redirect(url_for('lectures.view_lectures'))
 
 # Send notification to students
 @lectures_bp.route('/lectures/<int:lecture_id>/notify', methods=['POST'])

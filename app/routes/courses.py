@@ -3,7 +3,7 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask_login import login_required, current_user
 from .. import db
-from ..models import Course
+from ..models import Course, Lecture
 from datetime import datetime
 
 
@@ -15,8 +15,15 @@ courses_bp = Blueprint('courses', __name__)
 @login_required
 def view_courses():
     # Get all courses for the current student
+
+    lectures = Lecture.query.filter(Lecture.students.any(id=current_user.id)).all()
     courses = Course.query.filter_by(student_id=current_user.id).all()
-    return render_template('courses.html', courses=courses)
+    return render_template('courses.html', courses=courses, lectures=lectures)
+
+@courses_bp.route('/course/<int:course_id>/detail', methods=['GET'])
+@login_required
+def course_detail(course_id):
+    return render_template('view_courses.html')
 
 # Mark assignment as done
 @courses_bp.route('/course/<int:course_id>/mark_done', methods=['POST'])

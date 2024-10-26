@@ -9,10 +9,13 @@
 </div>
 <h1>Your Courses</h1>
 <ul class="list-group">
-    {% for course in courses %}
-    <li class="list-group-item">
-        <a href="{{ url_for('courses.detail', course_id=course.id) }}">{{ course.name }}</a>
-    </li>
+    {% for lecture in lectures %}
+        {% if current_user in lecture.students %}
+        <li class="list-group-item">
+            <a href="{{ url_for('courses.course_detail', course_id=lecture.id) }}">{{ lecture.title }}</a>
+        </li>
+        {% endif %}
+    
     {% endfor %}
 </ul>
 {% endblock %}

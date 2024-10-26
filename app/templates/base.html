@@ -80,5 +80,8 @@
     <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
     <!-- Custom JS -->
     <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+    {% block script %}
+    <!-- empty -->
+    {% endblock %}
 </body>
 </html>

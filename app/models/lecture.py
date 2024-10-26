@@ -12,6 +12,8 @@ class Lecture(db.Model):
   title = db.Column(db.String(100), nullable=False)  # Lecture title
   description = db.Column(db.String(255), nullable=True)  # Lecture description
   created_at = db.Column(db.DateTime, default=datetime.utcnow)
+  # start_date = db.Column(db.DateTime, nullable=True)  # Optional start date
+  # end_date = db.Column(db.DateTime, nullable=True) #optional end date
 
   # Relationships
   lecturer_id = db.Column(db.Integer,

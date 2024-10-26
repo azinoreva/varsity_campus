@@ -2,7 +2,95 @@
 
 {% block title %} {% endblock %}
 
-{% block content %}
+{% block navigation %}
+<div class="darkmodeToggle" id="darkmodeToggle">
+    <i class="fa fa-moon" aria-hidden="true"></i>
+</div>
+<div class="hamburger" id="hamburger" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
 
-<p>hi</p>
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasExampleLabel">MiniCampus</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('dashboard.profile', user_id=current_user.id) }}"><i class="fa fa-user fa-2x" title="profile" aria-hidden="true"></i><span>Profile</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('courses.view_courses') }}"><i class="fa fa-graduation-cap fa-2x" aria-hidden="true"></i><span>Lecture</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('library.library') }}"><i class="fa fa-book fa fa-2x" title="library" aria-hidden="true"></i><span>Library</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('posts.view_posts') }}"><i class="fa fa-plus-square fa-2x" title="posts" aria-hidden="true"></i><span>Posts</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('dashboard.friend') }}""><i class="fa fa-comment fa-2x" title="messages" aria-hidden="true"></i><span>Messages</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('community.view_communities') }}"><i class="fa fa-users fa-2x" title="community" aria-hidden="true"></i><span>Communities</span></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock%}
+{% block content %}
+<div class="container mt-5">
+    <h2>create lecture</h2>
+    <form action="{{ url_for('lectures.create_lecture') }}" method="POST" enctype="multipart/form-data">
+        <div>
+            <div class="form-group">
+                <label for="">Title</label>
+                <input type="text" name="title" required class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="">Description</label>
+                <input type="text" name="description" class="form-control">
+            </div>
+        </div>
+
+        <h2>add student</h2>
+        <ul id="studentList" class="list-group mb-3">
+            <!-- display added students -->
+        </ul>
+
+        <div>
+            <label for="">student email:</label>
+            <input type="email" id="studentEmailInput" class="form-control">
+            <div class="input-group-append">
+                <button type="button" id="addStudentBtn" class="btn btn-primary mt-2">Add Student</button>
+            </div>
+        </div>
+
+        <h2>add resources</h2>
+        <div class="form-group">
+            <label for="video_url">Video URL</label>
+            <input type="url" name="video_url" id="video_url" class="form-control">
+        </div>
+
+        <div class="form-gropu">
+            <label for="">Document Path</label>
+            <input type="file" name="document_path" id="document_path" class="form-control">
+        </div>
+
+        <input type="hidden" name="lecture_id" value="{{ current_user.id }}">
+        <input type="hidden" id="studentEmails" name="studentEmails" value="[]">
+        <div>
+            <button type="submit" class="btn btn-success">create lecture</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="{{ url_for('static', filename='js/lecture.js') }}"></script>
 {% endblock %}

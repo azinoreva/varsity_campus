@@ -43,27 +43,27 @@
     </div>
 </div>
 {% endblock%}
+
 {% block content %}
-<div>
-    <h2>create lecture</h2>
-    <form action="" method="POST">
-        <div>
-            <div>
-                <label for="">Title</label>
-                <input type="text" name="title">
-            </div>
-            <div>
-                <label for="">Description</label>
-                <input type="text" name="description">
-            </div>
-        </div>
-        <h2>add student</h2>
-        <div>
-            
-            <button type="submit">create lecture</button>
-        </div>
-    </form>
-</div>
+<a href="{{ url_for('lectures.create_lecture') }}"><i class="fa fa-plus fa-2x" aria-hidden="true"></i></a>
+
+<ul class="list-group">
+    {% for lecture in lectures %}
+    <li class="list-group-item"><p>{{ lecture.title }}</p>
+        <p>{{ lecture.description }}</p>
+        <p>{{ lecture.id }}</p>
+        <p>{% if lecture.students %}
+            {% for student in lecture.students %}
+                {{ student.username }}
+            {% endfor %}
+        {% else %}
+            No students enrolled.
+        {% endif %}</p>
+    </li>
+    {% else %}
+    <p>No lecture created</p>
+    {% endfor %}
+</ul>
 
 
 {% endblock %}
