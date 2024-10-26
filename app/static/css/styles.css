@@ -298,6 +298,8 @@ body {
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
+    /* position: fixed;
+    top: 0px; */
 }
 
 .post-form-container {
@@ -342,32 +344,76 @@ body {
     width: 100%;
     flex-flow: column nowrap;
     align-items: center;
+    position: relative;
 }
+
+/* .comment-wrapper {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+} */
 
 .comment-item {
     display: flex;
-    width: 50%;
+    width: 350px;
     flex-flow: column nowrap;
     align-items: center;
     margin-bottom: 10px;
-    border: 1px solid grey;
+    border: 0px solid grey;
     border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.add-comment {
+    position: fixed;
+    bottom: 20px;
+}
+
+.view-post-container {
+    height: 100vh;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+}
+
+.view-post-container button {
+    border: none;
+    background: none;
+    color: #0d6efd;
+    transform: translate(5px, -20px);
+    transition: .3s ease;
+}
+
+.view-post-container button:hover {
+    transform: translate(10px, -20px);
+    color: #B0DAF1;
+}
+
+.view-post-container textarea {
+    width: 250px;
+    height: 50px;
+}
+
+.comments-container .comment-item p {
+    padding: 10px;
 }
 
 #username {
-    transform: translate(-250px, 5px);
+    color: #0d6efd;
 }
 
 #time {
-    transform: translate(250px, -4px);
+    transform: translate(150px, -4px);
 }
 
-@media (max-width: 700px) {
-    .comment-item {
-        width: 90%;
-    }
+.comments-wrapper {
+    height: 80vh;
+    width: 380px;
+    overflow: scroll;
+}
 
-    #username {
-        transform: translate(-150px, 5px);
-    }
+.view-post-container a {
+    position: fixed;
+    top: 10px;
+    left: 10px;
 }
