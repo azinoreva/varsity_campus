@@ -33,30 +33,37 @@ def create_lecture():
         description = request.form['description']
         student_emails = request.form['studentEmails']
         lecture_id = request.form['lecture_id']
-        # video_url=request.form['video_url']
-        # document_path=request.form['document_path']
+        video_url=request.form['video_url']
+        document_path=request.form['document_path']
 
-        student_email_list = [mail.strip() for mail in student_emails.split(',')]
+        if student_emails:
+            student_email_list = [mail.strip() for mail in student_emails.split(',')]
 
-        for email in student_email_list:
-            student = User.query.filter_by(email=email).first()
-            if student:
-                    # Check if the student is already associated with this lecture to avoid duplicates
-                    exists = db.session.query(lecture_students).filter_by(
-                    student_id=student.id, lecture_id=lecture_id).first()
-                    if not exists:
-                        # If the association does not exist, add it to lecture_students table
-                        stmt = lecture_students.insert().values(
-                            student_id=student.id, lecture_id=lecture_id
-                        )
-                        db.session.execute(stmt)
+            for email in student_email_list:
+                student = User.query.filter_by(email=email).first()
+                if student:
+                        # Check if the student is already associated with this lecture to avoid duplicates
+                        exists = db.session.query(lecture_students).filter_by(
+                        student_id=student.id, lecture_id=lecture_id).first()
+                        if not exists:
+                            # If the association does not exist, add it to lecture_students table
+                            stmt = lecture_students.insert().values(
+                                student_id=student.id, lecture_id=lecture_id
+                            )
+                            db.session.execute(stmt)
         
         lecture = Lecture.query.get_or_404(lecture_id)
         new_lecture = Lecture(title=title, description=description, lecturer_id=current_user.id)
-        # video = LectureVideo(video_url, lecture_id=lecture.id)
-        # document = LectureDocument(document_path, lecture_id=lecture.id)
-
         db.session.add(new_lecture)
+
+        if video_url:
+            video = LectureVideo(video_url, lecture_id=lecture.id)
+            db.session.add(video)
+
+        if document_path:
+            document = LectureDocument(document_path, lecture_id=lecture.id)
+            db.session.add(document)
+
         db.session.commit()
         flash('lecture created successfully.')
 
@@ -93,3 +100,12 @@ def drop_assignment(lecture_id):
     db.session.commit()
     flash('Assignment dropped.')
     return redirect(url_for('lectures.view_lectures'))
+
+@lectures_bp.route('/lectures/<int:lecture_id>/edit', methods=['POST'])
+@login_required
+def edit_lecture(lecture_id):
+    lectures = Lecture.query.filter_by(lecture_id)
+    lectures.title = request.form['title']
+    lectures.description = request.form['description']
+
+    return render_template('lectures/view_lectures.html', lectures=lectures) 
