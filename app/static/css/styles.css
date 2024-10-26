@@ -42,7 +42,7 @@ body {
     width: 370px;
     justify-content: center;
     align-items: center;
-    border: 1px solid #333;
+    border: 0px solid #333;
     border-radius: 5px;
     background-color: #F1FFFA;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1)
