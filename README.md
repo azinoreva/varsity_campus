@@ -34,11 +34,11 @@ The following are the step by step guides to actiively work on this project.
 ### Installing Python
 
 To run a python script you need to install python. Let's [download](https://www.python.org/) python.
-If your are a windows user. Click the button encircled in red.
+If your are a windows user. Click the button below.
 
 [![installing on Windows](./images/installing_on_windows.png)](https://www.python.org/)
 
-If you are a macOS user. Click the button encircled in red.
+If you are a macOS user. Click the link below.
 
 [![installing on Windows](./images/installing_on_macOS.png)](https://www.python.org/)
 
@@ -50,3 +50,9 @@ python --version
 
 ![Python Version](./images/python_versio.png)
 
+### Installing flask
+
+Within the activated environment, use the following command to install Flask:
+```shell
+$ pip install Flask
+```
