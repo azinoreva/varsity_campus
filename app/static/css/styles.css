@@ -4,6 +4,14 @@
     margin: 0;
 }
 
+html, body {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+}
+
 body {
     background-color: #f8f9fa;
 }
@@ -30,8 +38,8 @@ body {
 .form-container {
     display: flex;
     flex-flow: column nowrap;
-    height: 60vh;
-    width: 50%;
+    height: 370px;
+    width: 370px;
     justify-content: center;
     align-items: center;
     border: 1px solid #333;
@@ -61,8 +69,9 @@ body {
 }
 
 .form-container-wrapper {
-    background-color: #FDFFFF;
-    /* width: 100vw; */
+    /* background-color: #8CFBDE; */
+    min-width: 100%;
+    min-height: 100%
 }
 
 /* Navbar */
