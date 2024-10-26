@@ -59,7 +59,7 @@ def login():
             elif current_user.has_role('Lecturer'):
                 return redirect(url_for('lectures.view_lectures')) 
             else:
-                return redirect(url_for('courses.view_courses'))  # Regular users redirection
+                return redirect(url_for('posts.view_posts'))  # Regular users redirection
         else:
             flash('Invalid email or password. Please try again.')
             return redirect(url_for('auth.login'))
