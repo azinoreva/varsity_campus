@@ -8,18 +8,18 @@
 
 
 {% block content %}
-<div>
-    <a href="{{ url_for('posts.view_posts') }}"> &lt;= back</a>
-    <div>
-        <h1>{{ post.author.username }}</h1>
+<div class="view-post-container">
+    <a href="{{ url_for('posts.view_posts') }}"><i class="fa fa-arrow-left" aria-hidden="true"></i>
+    </a>
+    <div class="comments-wrapper">
+        <!-- <h1>{{ post.author.username }}</h1>
         <p>{{ post.text }}</p>
 
         {% if post.image %}
         <img src="{{ url_for('static', filename='images/' + post.image) }}" width="600px" height="400px">
-        {% endif %}
+        {% endif %} -->
 
         <div>
-            <h3>comments</h3>
             <ul class="list-group comments-container">
                 {% for comment in comments %}
                 <li class="comment-item">
@@ -30,14 +30,15 @@
                 {% else %}
                     <li class="list-group-item">No comments</li>
                 {% endfor %}
-                <form action="{{ url_for('posts.comment_post', post_id=post.id) }}" method="POST">
-                    <textarea name="text" id="text" rows="1"></textarea>
-                    <button type="submit">comment</button>
-                </form>
             </ul>
+            
             
         </div>
     </div>
+    <form class="add-comment" action="{{ url_for('posts.comment_post', post_id=post.id) }}" method="POST">
+        <textarea name="text" id="text" rows="1" placeholder="Comment..."></textarea>
+        <button type="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+    </form>
 </div>
 
 <!-- <div>
