@@ -68,6 +68,14 @@ Within the activated environment, use the following command to install Flask:
 ```shell
 $ pip install Flask
 ```
+Then run the *flask* using this command.
+```shell
+$ python3 -m flask run
+or
+$ flask run
+or
+$ flask run --debug
+```
 ### Dependencies:
 These distributions will be installed automatically when installing Flask.
 
@@ -112,3 +120,4 @@ We welcome contributions from you to enhance the **MiniCampus** if you wish to c
 |  02  | [instance](./instance)
 |  03  | [migrarations](./migrations)
 |  04  | [tests](./tests)
+|  05  | [venv](./venv)
