@@ -28,12 +28,14 @@ function toggleMode() {
     
 }
 
-darkmodeToggle.addEventListener('click', () => {
-    toggleMode();
-    // Save user preference in localStorage
-    const theme = darkmodeToggle.classList.contains('dark-mode') ? 'dark' : 'light';
-    localStorage.setItem('theme', theme);
-})
+if (darkmodeToggle) {
+    darkmodeToggle.addEventListener('click', () => {
+        toggleMode();
+        // Save user preference in localStorage
+        const theme = darkmodeToggle.classList.contains('dark-mode') ? 'dark' : 'light';
+        localStorage.setItem('theme', theme);
+    })
+}
 
 // Indicates whether a file is selected or not
 document.getElementById('image').addEventListener('change', function() {
@@ -45,3 +47,13 @@ document.getElementById('image').addEventListener('change', function() {
         icon.classList.remove('file-selected');
     }
 })
+
+// document.getElementById('message-file').addEventListener('change', function() {
+//     const icon = document.getElementById('message-attach-icon');
+
+//     if (this.files.length > 0) {
+//         icon.classList.toggle('file-selected');
+//     } else {
+//         icon.classList.remove('file-selected');
+//     }
+// })
