@@ -104,8 +104,8 @@ We welcome contributions from you to enhance the **MiniCampus** if you wish to c
 * make your changes and submit a pull request
 ```
 
-## CONTENTS OF THE APP
+## CONTENTS OF THE VARSITY_CAMPUS APP
 
 |# NO.  |  Folder's name           |
 |-------| :------------------------|
-|  01  | [app]
+|  01  | [app](./app)
