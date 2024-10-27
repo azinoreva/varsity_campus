@@ -8,20 +8,34 @@
 
 {% block content %}
 
+<div class="message-wrapper">
+    <ul class="list-group message-container">
+        {% for message in messages %}
+        {% if message.sender.id == current_user.id %}
+        <li class="message user">
+            {{ message.content }}
+        </li>
+        {% else %}
+        <li class="message sender">
+            {{ message.content }}
+        </li>
+        {% endif %}
+        {% endfor %}
+    </ul>
 
-{% for message in messages %}
-    <p><strong>{{ message.sender.username }}</strong>: {{ message.content }}</p>
-{% endfor %}
-
-<form action="{{ url_for('message.send_message', user_id=user.id) }}" method="POST" enctype="multipart/form-data">
-    <textarea name="content" placeholder="Write your message" required></textarea>
-    
-    <!-- Pass the receiver_id as a hidden input -->
-    <input type="hidden" name="receiver_id" value="{{ user.id }}">
-    
-    <input type="file" name="attachment">
-    <button type="submit">Send</button>
-</form>
+    <form action="{{ url_for('message.send_message', user_id=user.id) }}" method="POST" enctype="multipart/form-data">
+        <textarea class="message-textarea" name="content" placeholder="Write your message" required></textarea>
+        
+        <!-- Pass the receiver_id as a hidden input -->
+        <input type="hidden" name="receiver_id" value="{{ user.id }}">
+        
+        <label for="image" class="attach-label">
+            <i id="attach-icon" class="fas fa-paperclip"></i>
+        </label>
+        <input type="file" id="image" class="file-input" name="attachment">
+        <button type="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+    </form>
+</div>
 {% endblock %}
 
 

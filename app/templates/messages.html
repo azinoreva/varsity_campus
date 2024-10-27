@@ -6,9 +6,15 @@
 <h1>Your Messages</h1>
 <ul class="list-group">
     {% for message in messages %}
-    <li class="list-group-item">
+    {% if message.sender == current_user %}
+    <li class="user">
         <strong>{{ message.sender }}</strong>: {{ message.content }}
     </li>
+    {% else %}
+    <li class="sender">
+        <strong>{{ message.sender }}</strong>: {{ message.content }}
+    </li>
+    {% endif %}
     {% endfor %}
 </ul>
 {% endblock %}

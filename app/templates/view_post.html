@@ -24,7 +24,7 @@
                 {% for comment in comments %}
                 <li class="comment-item">
                     <strong id="username">{{ comment.user.username }}</strong>
-                    <p>{{ comment.text }}</p>
+                    <p id="comment-text">{{ comment.text }}</p>
                     <small id="time">{{ comment.timestamp.strftime('%H:%M') }}</small>
                 </li>
                 {% else %}
