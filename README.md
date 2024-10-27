@@ -29,7 +29,8 @@ MiniCampus application is an innovative academic application designed to enhance
 
 The following are the step by step guides to actiively work on this project.
 
-## Environment Setup
+## Virtual Environment Setup
+
 
 ### Installing Python
 
