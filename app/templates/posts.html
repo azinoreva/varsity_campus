@@ -4,7 +4,7 @@
 
 {% block content %}
 <ul class="list-group posts-container">
-    <div class="container mt-5 create-post-container">
+    <div class="container create-post-container">
         <form class="post-form-container" action="{{ url_for('posts.create_post') }}" method="POST" enctype="multipart/form-data">
             <div class="form-group-1">
                 <textarea class="form-control" id="content" name="text" rows="1" required placeholder="Share something..."></textarea>

@@ -249,6 +249,8 @@ body {
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
+    position: relative;
+    top: 40px;
 }
 
 .posts-container .post {
@@ -301,17 +303,13 @@ body {
 }
 
 /* Create Post */
-
-.posts-container {
-    margin-top: 50px;
-}
-
 .create-post-container {
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
     position: fixed;
     top: 0px;
+    margin-top: 10px;
 }
 
 .post-form-container {
@@ -325,6 +323,12 @@ body {
 
 #content {
     width: 300px;
+}
+
+@media (max-width: 430px) {
+    #content {
+        width: 230px;
+    }
 }
 
 .post-form-container button {
