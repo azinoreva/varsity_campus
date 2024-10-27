@@ -49,21 +49,25 @@
 
 <ul class="list-group">
     {% for lecture in lectures %}
-    <li class="list-group-item"><p>{{ lecture.title }}</p>
+    <li class="list-group-item">
+        <p>{{ lecture.title }}</p>
         <p>{{ lecture.description }}</p>
-        <p>{{ lecture.id }}</p>
-        <p>{% if lecture.students %}
-            {% for student in lecture.students %}
-                {{ student.username }}
-            {% endfor %}
+
+            {% if lecture.students %}
+                {% for student in lecture.students %}
+                    <span>{{ student.username }}</span>
+                {% endfor %}
+            {% endif %}
+        <a href="{{ url_for('lectures.edit_lecture', lecture_id=lecture.id) }}">edit</a>
+        <a href="#" id="deleteLectureBtn" data-lecture-id="{{ lecture_id }}">Delete</a>
         {% else %}
-            No students enrolled.
-        {% endif %}</p>
+            <p>No lecture created</p>
     </li>
-    {% else %}
-    <p>No lecture created</p>
     {% endfor %}
 </ul>
 
+{% endblock %}
 
+{% block script %}
+<script src="{{ url_for('static', filename='js/lecture.js') }}"></script>
 {% endblock %}

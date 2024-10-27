@@ -57,7 +57,7 @@ def login():
             if user.is_super_admin():
                 return redirect(url_for('manage_users.manage_users'))  # Super admin 
             elif current_user.has_role('Lecturer'):
-                return redirect(url_for('lectures.view_lectures')) 
+                return redirect(url_for('lectures.view_lectures', lecturer_id=current_user.id)) 
             else:
                 return redirect(url_for('posts.view_posts'))  # Regular users redirection
         else:
