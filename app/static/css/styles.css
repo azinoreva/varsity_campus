@@ -87,6 +87,9 @@ body {
     flex-direction: column;
     cursor: pointer;
     margin: 15px;
+    /* position: fixed;
+    top: 5px;
+    left: 5px; */
 }
 
 .hamburger span {
@@ -518,5 +521,6 @@ body {
 }
 
 .message-wrapper .fa-paper-plane:hover {
-    transform: translate(-3px, -20px)
+    transform: translate(-3px, -20px);
+    color: #B0DAF1;
 }
