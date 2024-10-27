@@ -57,7 +57,6 @@ $ cd varsity_campus
 ```
 ### Create an environment
 ```shell
-$ mkdir varsity_campus (create a folder or project directory)
 $ cd varsity_campus
 $ python3 -m venv/bin/activate for (macOS/Linux) users.
 $ source venv/bin/activate for window users.
