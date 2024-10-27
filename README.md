@@ -96,3 +96,7 @@ To make the software requirements available on you machine, type the following c
 $ pip install -r requirements.txt
 ```
 
+## CONTRIBUTION GUIDES:
+We welcome contributions from you to enhance the **MiniCampus** if you wish to contribute; Just:---
+```shell
+* fork the repository.
