@@ -63,3 +63,25 @@ Within the activated environment, use the following command to install Flask:
 ```shell
 $ pip install Flask
 ```
+### Dependencies:
+These distributions will be installed automatically when installing Flask.
+
+* [Werkzeug](https://palletsprojects.com/p/werkzeug/) implements WSGI, the standard Python interface between applications and servers.
+
+* [Jinja](https://palletsprojects.com/p/jinja/) is a template language that renders the pages your application serves.
+
+* [MarkupSafe](https://palletsprojects.com/p/markupsafe/) comes with Jinja. It escapes untrusted input when rendering templates to avoid injection attacks.
+
+* [ItsDangerous](https://palletsprojects.com/p/itsdangerous/) securely signs data to ensure its integrity. This is used to protect Flask’s session cookie.
+
+* [Click](https://palletsprojects.com/p/click/) is a framework for writing command line applications. It provides the *flask* command and allows adding custom management commands.
+
+* [Blinker](https://blinker.readthedocs.io/) provides support for [Signals.](https://flask.palletsprojects.com/en/stable/signals/)
+
+### Optional dependencies
+These distributions will not be installed automatically. Flask will detect and use them if you install them.
+
+* [python-dotenv](https://github.com/theskumar/python-dotenv#readme) enables support for Environment Variables From dotenv when running flask commands.
+
+* [Watchdog](https://pythonhosted.org/watchdog/) provides a faster, more efficient reloader for the development server.
+
