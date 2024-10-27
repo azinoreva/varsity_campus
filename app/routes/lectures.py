@@ -167,5 +167,6 @@ def delete_lecture(lecture_id):
     db.session.delete(lecture)
     db.session.commit()
     
+    lectures = Lecture.query.all()
     flash('Lecture deleted successfully.')
-    return redirect(url_for('lectures.view_lectures'))
+    return redirect(url_for('lectures.view_lectures', lecturer_id=current_user.id))

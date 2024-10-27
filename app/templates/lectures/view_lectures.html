@@ -50,16 +50,18 @@
 <ul class="list-group">
     {% for lecture in lectures %}
     <li class="list-group-item">
-        <p>{{ lecture.title }}</p>
+        <strong>{{ lecture.title }}</strong>
         <p>{{ lecture.description }}</p>
 
-            {% if lecture.students %}
-                {% for student in lecture.students %}
-                    <span>{{ student.username }}</span>
-                {% endfor %}
-            {% endif %}
-        <a href="{{ url_for('lectures.edit_lecture', lecture_id=lecture.id) }}">edit</a>
-        <a href="#" id="deleteLectureBtn" data-lecture-id="{{ lecture_id }}">Delete</a>
+        <div class="d-flex align-items-center gap-3">
+            <a href="{{ url_for('lectures.edit_lecture', lecture_id=lecture.id) }}">edit</a>
+
+        <form id="deleteForm" action="{{ url_for('lectures.delete_lecture', lecture_id=lecture.id) }}" method="post" onsubmit="return confirmDelete();">
+            <input type="hidden" name="lecture_id" value="{{ lecture_id }}">
+            <button type="submit">Delete</button>
+        </form>
+        </div>
+
         {% else %}
             <p>No lecture created</p>
     </li>

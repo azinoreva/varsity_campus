@@ -78,36 +78,6 @@ initializeExistingEmails();
 
 
 
-
-document.getElementById('deleteLectureBtn').addEventListener('click', function (event) {
-    event.preventDefault(); // Prevent default link behavior
-
-    console.log("it got to this point");
-    
-    const lectureId = this.getAttribute('data-lecture-id'); // Retrieve lecture ID from data attribute
-    console.log(lectureId);
-    
-
-    // Display confirmation prompt
-    const confirmation = confirm('Are you sure you want to delete this lecture? This action cannot be undone.');
-
-    if (confirmation) {
-        // If confirmed, proceed with deletion
-        fetch(`/lectures/delete/${lectureId}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        }).then(response => {
-            if (response.ok) {
-                alert('Lecture deleted successfully');
-                window.location.href = '/lectures/view_lectures/'; // Redirect to view lectures page
-            } else {
-                alert('Failed to delete lecture');
-            }
-        }).catch(error => {
-            console.error('Error:', error);
-            alert('An error occurred while trying to delete the lecture.');
-        });
-    }
-});
+function confirmDelete() {
+    return confirm('Are you sure you want to delete this lecture? This action cannot be undone.');
+}
