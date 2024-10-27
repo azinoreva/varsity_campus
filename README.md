@@ -103,3 +103,9 @@ We welcome contributions from you to enhance the **MiniCampus** if you wish to c
 * Create a new branch.
 * make your changes and submit a pull request
 ```
+
+## CONTENTS OF THE APP
+
+|# NO.  |  Folder's name           |
+|-------| :------------------------|
+|  01  | [app]
