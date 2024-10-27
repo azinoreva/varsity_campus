@@ -1,3 +1,6 @@
+## WELCOME:
+**You are gladly welcome** for deciding to contribute in this project. Your idears and creativity are highly welcome.
+
 ## PROJECT OVERVIEW:
 MiniCampus application is an innovative academic application designed to enhance the experience of students, lectureres and administrators within an academic environment. It provides various features including events, course materials, access to the library, assigning a role to a lecturer(s) and also a platform for communication within the campus community.
 
@@ -28,20 +31,16 @@ MiniCampus application is an innovative academic application designed to enhance
 ## INSTALLATION:
 
 The following are the step by step guides to actiively work on this project.
-
-## Virtual Environment Setup
-
-
 ### Installing Python
 
 To run a python script you need to install python. Let's [download](https://www.python.org/) python.
-If your are a windows user. Click the button below.
+If your are a windows user. Click the link below.
 
-[![installing on Windows](./images/installing_on_windows.png)](https://www.python.org/)
+[![installing on Windows](https://www.python.org/)
 
 If you are a macOS user. Click the link below.
 
-[![installing on Windows](./images/installing_on_macOS.png)](https://www.python.org/)
+[![installing on Windows](https://www.python.org/)
 
 To check if python is installed write the following command on your device terminal.
 
@@ -51,9 +50,17 @@ python --version
 
 ![Python Version](./images/python_versio.png)
 
+### Create an environment
+```shell
+$ mkdir varsity_campus (create a folder or project directory)
+$ cd varsity_campus
+$ python3 -m venv/bin/activate (macOS/Linux) 
+```
+
 ### Installing flask
 
 Within the activated environment, use the following command to install Flask:
 ```shell
 $ pip install Flask
 ```
+
