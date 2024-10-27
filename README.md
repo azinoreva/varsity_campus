@@ -111,3 +111,4 @@ We welcome contributions from you to enhance the **MiniCampus** if you wish to c
 |  01  | [app](./app)
 |  02  | [instance](./instance)
 |  03  | [migrarations](./migrations)
+|  04  | [tests](./tests)
