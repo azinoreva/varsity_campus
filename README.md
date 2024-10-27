@@ -100,3 +100,6 @@ $ pip install -r requirements.txt
 We welcome contributions from you to enhance the **MiniCampus** if you wish to contribute; Just:---
 ```shell
 * fork the repository.
+* Create a new branch.
+* make your changes and submit a pull request
+```
