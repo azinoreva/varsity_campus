@@ -50,11 +50,17 @@ python --version
 
 ![Python Version](./images/python_versio.png)
 
+**Note**: After installing the latest version of the python, then;
+```shell
+* **clone the repository**:$ git clone https://{*YOUR_ACCESS_TOKEN*}/{*YOUR_USERNAME}/varsity_campus.git.
+$ cd varsity_campus
+```
 ### Create an environment
 ```shell
 $ mkdir varsity_campus (create a folder or project directory)
 $ cd varsity_campus
-$ python3 -m venv/bin/activate (macOS/Linux) 
+$ python3 -m venv/bin/activate for (macOS/Linux) users.
+$ source venv/bin/activate for window users.
 ```
 
 ### Installing flask
@@ -84,4 +90,10 @@ These distributions will not be installed automatically. Flask will detect and u
 * [python-dotenv](https://github.com/theskumar/python-dotenv#readme) enables support for Environment Variables From dotenv when running flask commands.
 
 * [Watchdog](https://pythonhosted.org/watchdog/) provides a faster, more efficient reloader for the development server.
+
+## REQUIREMENT
+To make the software requirements available on you machine, type the following commands in your terminal
+```shell
+$ pip install -r requirements.txt
+```
 
