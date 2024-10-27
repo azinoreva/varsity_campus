@@ -109,3 +109,5 @@ We welcome contributions from you to enhance the **MiniCampus** if you wish to c
 |# NO.  |  Folder's name           |
 |-------| :------------------------|
 |  01  | [app](./app)
+|  02  | [instance](./instance)
+|  03  | [migrarations](./migrations)
