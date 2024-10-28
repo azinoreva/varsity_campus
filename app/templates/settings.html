@@ -5,22 +5,24 @@
 
 {% block navigation %}
 
-<a href="{{ url_for('dashboard.profile', user_id=current_user.id) }}"><i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i></a>
+<a href="{{ url_for('dashboard.profile', user_id=current_user.id) }}"><i id="go-back" class="fa fa-arrow-left fa-lg" aria-hidden="true"></i></a>
 {% endblock %}
 
 {% block content%}
-<a href="{{ url_for('auth.logout') }}">logout</a>
-<form action="{{ url_for('dashboard.profile', user_id=current_user.id) }}" method="POST" enctype='multipart/form-data'>
-    <div>
-        <label>Bio:</label>
-        <textarea name="bio" row=10 column=1></textarea>
-    </div>
-    <div>
-        <label  for="">choose image:</label>
-        <input type="file" name="profile_image">
-    </div>
-    <div>
-        <button type="submit">update profile</button>
-    </div>
-</form>
+<a href="{{ url_for('auth.logout') }}"><img class="logout" title="logout" src="../static/images/logout-32x32.png"></a>
+<div class="settings-container">
+    <form class="settings-form" action="{{ url_for('dashboard.profile', user_id=current_user.id) }}" method="POST" enctype='multipart/form-data'>
+        <div>
+            <label class="settings-label" for="bio">Edit bio:</label>
+            <textarea name="bio" id="bio" row=10 column=1></textarea>
+        </div>
+        <div>
+            <label class="settings-label" for="profile-image">Change Profile Picture:</label>
+            <input type="file" id="profile-image" name="profile_image">
+        </div>
+        <div>
+            <button class="btn btn-primary" type="submit">update profile</button>
+        </div>
+    </form>
+</div>
 {% endblock %}
