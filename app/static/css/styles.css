@@ -76,8 +76,17 @@ html, body {
 }
 
 /* Navbar */
-.hamburger {
+.hamburger-wrapper {
+    position: fixed;
+    top: 0px;
     width: 100%;
+    height: 50px;
+    background-color: #fff;
+    z-index: 2;
+}
+
+.hamburger {
+    width: 30px;
     height: 40px;
     display: flex;
     justify-content: space-around;
@@ -395,7 +404,7 @@ html, body {
     margin-bottom: 10px;
     border: 0px solid grey;
     border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0px 8px #333;
 }
 
 .add-comment {
@@ -439,11 +448,15 @@ html, body {
 }
 
 #comment-text {
-    margin-top: 20px;
+    margin-top: 30px;
 }
 
 #time {
     transform: translate(150px, -4px);
+}
+
+.comment-username {
+    text-decoration: none;
 }
 
 .comments-wrapper {
