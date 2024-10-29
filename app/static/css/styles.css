@@ -244,14 +244,15 @@ html, body {
     height: 100vh;
 }
 
-/* Heading */
+/* Communities */
 .heading {
     font-family: 'Courier New', Courier, monospace;
     font-size: xx-large;
     text-align: center;
+    margin-top: 50px;
+    width: 100%;
 }
 
-/* Communities */
 .list-group-item a {
     list-style: none;
     text-decoration: none;
@@ -262,6 +263,68 @@ html, body {
 .list-group-item a:hover {
     transform: translateY(-2px);
     color: blueviolet;
+}
+
+#community-username {
+    text-decoration: none;
+    font-size: large;
+}
+
+.date-time {
+    font-size: small;
+    margin-left: 5px;
+}
+
+P {
+    margin-bottom: 5px;
+}
+
+.community-message-wrapper {
+    margin-bottom: 15px !important;
+    padding: 0px !important;
+}
+
+.post-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    bottom: 10px;
+}
+
+.post-box {
+    margin-bottom: 0px !important;
+    padding: 0px; 
+}
+
+.community-post-box {
+    display: flex;
+}
+
+.community-post-box #attach-icon {
+    transform: translate(-23px, 7px);
+}
+
+.community-post-box button {
+    border: none;
+    background: none;
+    color: #0d6efd;
+    transform: translateX(-5px);
+    transition: 0.3s ease;
+}
+
+.community-post-box button:hover {
+    transform: translateX(2px);
+    color: #B0DAF1;
+}
+
+.messages {
+    height: 75vh;
+}
+
+.messages::-webkit-scrollbar {
+    display: none;
 }
 
 /* Posts */

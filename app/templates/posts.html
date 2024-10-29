@@ -20,7 +20,7 @@
     </div>
     {% for post in posts %}
     <div class="post">
-        <h5><a href="{{ url_for('dashboard.profile', user_id=post.user_id) }}">@{{ post.author.username }}</a></h5>
+        <h5><a href="{{ url_for('dashboard.profile', user_id=post.user_id) }}">{{ post.author.username }}</a></h5>
         <p>{{ post.text }}</p>
         {% if post.image %}
         <img src="{{ url_for('static', filename='images/' + post.image) }}" width="600px" height="400px">

@@ -5,7 +5,7 @@
 {% block content %}
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h1>{{ community.name }}</h1>
+        <h1 class="heading">{{ community.name }}</h1>
         <form action="{{ url_for('community.leave_community', community_id=community.id) }}" method="POST" class="d-inline" id="leave-community-form">
             <button type="button" class="btn btn-danger btn-sm" id="leave-btn" title="Leave Community" onclick="confirmLeave()">
                 X
@@ -17,7 +17,7 @@
     <div class="messages" id="message-area" style="overflow-y: auto; max-height: 70vh; padding-bottom: 70px;">
         {% for message in messages %}
         <div class="message mb-3 community-message-wrapper">
-            <p><strong>{{ message.user.username }}</strong> {{ message.created_at.strftime('%d/%m/%Y %H:%M') }}:</p>
+            <p><strong><a class="community-username" id="community-username" href="{{ url_for('dashboard.profile', user_id=message.user.id) }}">{{ message.user.username }}</a></strong> <span class="date-time">{{ message.created_at.strftime('%d/%m/%Y %H:%M') }}</span></p>
             <p>{{ message.message }}</p>
             {% if message.file_url %}
             <p>
@@ -31,15 +31,20 @@
     </div>
 
     <!-- Form to post new messages (fixed at the bottom) -->
-    <form action="{{ url_for('community.view_community_detail', community_id=community.id) }}" method="POST" enctype="multipart/form-data" class="position-fixed w-100 bottom-0 bg-white p-3" style="left: 0;">
-        <div class="form-group mb-2">
-            <textarea class="form-control" id="content" name="content" rows="1" placeholder="Type your message..."></textarea>
-        </div>
-        <div class="form-group mb-2">
-            <input type="file" class="form-control-file" id="file" name="file">
-        </div>
-        <button type="submit" class="btn btn-primary">Post</button>
-    </form>
+    <div class="post-wrapper">
+        <form class="community-post-box" action="{{ url_for('community.view_community_detail', community_id=community.id) }}" method="POST" enctype="multipart/form-data" class="position-fixed w-100 bottom-0 bg-white p-3" style="left: 0;">
+            <div class="form-group mb-2 post-box">
+                <textarea class="form-control" id="content" name="content" rows="1" placeholder="Type your message..."></textarea>
+            </div>
+            <div class="form-group mb-2 post-box">
+                <label for="image" class="attach-label">
+                    <i id="attach-icon" class="fas fa-paperclip"></i>
+                </label>
+                <input type="file" class="form-control-file" id="image" name="file">
+            </div>
+            <button type="submit" class=""><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+        </form>
+    </div>
 </div>
 
 <script>
