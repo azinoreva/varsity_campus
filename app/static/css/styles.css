@@ -153,6 +153,7 @@ html, body {
     width: 50%;
     padding: 10px;
     margin: 20px;
+    margin-top: 30px;
 }
 
 .search-icon {
@@ -188,6 +189,10 @@ html, body {
 
 .hamburger.dark-mode span {
     background-color: #B0DAF1;
+}
+
+.hamburger-wrapper.dark-mode {
+    background-color: #011C27;
 }
 
 .offcanvas.dark-mode {
@@ -671,4 +676,14 @@ textarea {
     justify-content: center;
     align-items: center;
     height: 100vh;
+}
+
+#bio {
+    width: 300px;
+}
+
+/* Courses */
+.course-header {
+    position: relative;
+    top: 20px;
 }

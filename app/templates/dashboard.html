@@ -4,7 +4,6 @@
 
 {% block content %}
 <div class="d-flex justify-content-between align-items-center" style="margin-top: 50px;">
-    <h2>profile</h2>
     <a href="{{ url_for('auth.account_settings') }}"><i class="fas fa-cog fa-2x"></i></a>
 </div>
 
@@ -37,6 +36,6 @@
     {% endif %}
 {% endif %}
 
-<a href="{{ url_for('dashboard.friend') }}">friends</a>
+<a class="btn btn-primary" href="{{ url_for('dashboard.friend') }}">Friends</a>
 
 {% endblock %}
