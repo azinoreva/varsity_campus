@@ -76,6 +76,18 @@ class User(UserMixin, db.Model):
                               backref='friend_of',
                               lazy='dynamic')
 
+    def __init__(self, username, roles=None):
+        self.username = username
+        if roles is None:
+            # Set default role to 'User' if no roles are provided
+            default_role = Role.query.filter_by(name='User').first()
+            if default_role:
+                self.roles = [default_role]
+            else:
+                self.roles = []
+        else:
+            self.roles = roles
+
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
 

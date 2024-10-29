@@ -12,8 +12,9 @@ class Lecture(db.Model):
   title = db.Column(db.String(100), nullable=False)  # Lecture title
   description = db.Column(db.String(255), nullable=True)  # Lecture description
   created_at = db.Column(db.DateTime, default=datetime.utcnow)
-  # start_date = db.Column(db.DateTime, nullable=True)  # Optional start date
-  # end_date = db.Column(db.DateTime, nullable=True) #optional end date
+  notes = db.Column(db.String(5000), nullable=True)
+  start_date = db.Column(db.DateTime, nullable=True)  # Optional start date
+  end_date = db.Column(db.DateTime, nullable=True) #optional end date
 
   # Relationships
   lecturer_id = db.Column(db.Integer,
@@ -84,8 +85,15 @@ class Assignment(db.Model):
   __tablename__ = 'assignments'
 
   id = db.Column(db.Integer, primary_key=True)
-  description = db.Column(db.String(255), nullable=False)  # Assignment details
+  description = db.Column(db.String(255), nullable=True)  # Assignment details
+  content = db.Column(db.String(5000), nullable=True)
   due_date = db.Column(db.DateTime, nullable=False)
   lecture_id = db.Column(db.Integer,
                          db.ForeignKey('lectures.id'),
+                         nullable=False)
+  student_id = db.Column(db.Integer,
+                         db.ForeignKey('users.id'),
+                         nullable=False)
+  lecturer_id = db.Column(db.Integer,
+                         db.ForeignKey('users.id'),
                          nullable=False)

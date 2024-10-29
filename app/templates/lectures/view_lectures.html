@@ -54,6 +54,7 @@
         <p>{{ lecture.description }}</p>
 
         <div class="d-flex align-items-center gap-3">
+            <a href="{{ url_for('lectures.view_assignment', lecturer_id=lecture.lecturer_id) }}">assignment</a>
             <a href="{{ url_for('lectures.edit_lecture', lecture_id=lecture.id) }}">edit</a>
 
         <form id="deleteForm" action="{{ url_for('lectures.delete_lecture', lecture_id=lecture.id) }}" method="post" onsubmit="return confirmDelete();">

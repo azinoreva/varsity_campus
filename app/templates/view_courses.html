@@ -3,4 +3,9 @@
 
 {% block content %}
 <h1>course details</h1>
+{% for lecture in lectures %}
+<h1>{{ lecture.title }}</h1>
+
+
+{% endfor %}
 {% endblock %}

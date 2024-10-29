@@ -3,8 +3,8 @@
 from flask import Blueprint, request, render_template, redirect, url_for, flash
 from flask_login import login_required, current_user
 from .. import db
-from ..models import Lecture, User, LectureVideo, LectureDocument, Notification, Assignment, lecture_students
-import json
+from ..models import Lecture, User, LectureVideo, LectureDocument, Assignment, lecture_students
+from ..utils import save_file
 
 # Blueprint for lectures
 lectures_bp = Blueprint('lectures', __name__)
@@ -32,8 +32,8 @@ def create_lecture():
         title = request.form['title']
         description = request.form['description']
         student_emails = request.form['studentEmails']
-        # video_url = request.form['video_url']
-        # document_path = request.form['document_path']
+        
+        
 
         new_lecture = Lecture(title=title, description=description, lecturer_id=current_user.id)
         db.session.add(new_lecture)
@@ -57,13 +57,20 @@ def create_lecture():
                             )
                             db.session.execute(stmt)
 
-        # if video_url:
-        #     video = LectureVideo(video_url, lecture_id=lecture.id)
-        #     db.session.add(video)
+        video_url = request.form['video_url']
+        if video_url:
+            video_url_list = [url.strip() for url in video_url.split(',')]
+            for url in video_url_list:
+                video = LectureVideo(video_url=url, lecture_id=lecture_id)
+                db.session.add(video)
 
-        # if document_path:
-        #     document = LectureDocument(document_path, lecture_id=lecture.id)
-        #     db.session.add(document)
+        document_url = request.form['document_url']
+        if document_url:
+            print(request.form)
+            document_url_list = [url.strip() for url in document_url.split(',')]
+            for url in document_url_list:
+                document = LectureDocument(document_path=url, lecture_id=lecture_id)
+                db.session.add(document)
 
         db.session.commit()
         flash('lecture created successfully.')
@@ -73,6 +80,49 @@ def create_lecture():
     # Render the create_lecture template if it's a GET request
     return render_template('lectures/create_lecture.html')
 
+@lectures_bp.route('/lecture/view_assignment/<int:lecturer_id>', methods=['GET'])
+@login_required
+def view_assignment(lecturer_id):
+    if not current_user.has_role('Lecturer'):
+        flash('Only lecturers can view this page.')
+        return redirect(url_for('home.home'))
+
+    assignments = Assignment.query.filter_by(lecturer_id=lecturer_id).all()
+    return render_template('lectures/assignment.html', assignments=assignments)
+
+
+
+@lectures_bp.route('/lectures/assignment', methods=['GET', 'POST'])
+@login_required
+def create_assignment():
+    if not current_user.has_role('Lecturer'):
+        flash('Only lecturers can view this page.')
+        return redirect(url_for('home.home'))
+    
+    lectures = Lecture.query.all()  # Use plural 'lectures' for clarity
+    students = User.query.all()  # Use plural 'students' for clarity
+
+    # Check if there are lectures available
+    if lectures:
+        lecture_id = lectures[0].id  # Use the first lecture's ID
+    else:
+        lecture_id = None  # Handle case where there are no lectures
+
+    # Check if there are students available
+    if students:
+        student_id = students[0].id  # Use the first student's ID
+    else:
+        student_id = None  # Handle case where there are no students
+
+    if request.method == 'POST':
+        questions = request.form["questions"]
+
+        asignments = Assignment(questions=questions,lecture_id=lecture_id, student_id=student_id)
+        db.add(asignments)
+        db.commit()
+        return redirect(url_for('lectures.view_assignment', lecturer_id=lectures.lecturer_id))
+
+    return render_template('lectures/assignment.html')
 
 # Send notification to students
 @lectures_bp.route('/lectures/<int:lecture_id>/notify', methods=['POST'])
@@ -118,6 +168,8 @@ def edit_lecture(lecture_id):
         # Update the lecture's title and description
         lecture.title = request.form['title']
         lecture.description = request.form['description']
+        video_url = request.form['video_url']
+        document_url = request.form['document_url']
         
         # Update student associations if emails are provided
         student_emails = request.form.get('studentEmails')
@@ -143,6 +195,45 @@ def edit_lecture(lecture_id):
                 lecture_students.c.lecture_id == lecture_id,
                 ~lecture_students.c.student_id.in_(lecture_students_to_keep)
             ).delete(synchronize_session=False)
+
+        if video_url:
+            video_url_list = [url.strip() for url in video_url.split(',')]
+            video_ids_to_keep = []
+
+            # Update videos
+            for url in video_url_list:
+                # Check if the video URL already exists
+                video = LectureVideo.query.filter_by(video_url=url, lecture_id=lecture.id).first()
+                if not video:
+                    video = LectureVideo(video_url=url, lecture=lecture)  # Associate video with lecture
+                    db.session.add(video)
+                video_ids_to_keep.append(video.id)  # Keep track of existing videos
+
+            # Remove videos that are no longer associated
+            for video in lecture.videos:
+                if video.id not in video_ids_to_keep:
+                    db.session.delete(video)
+
+        if document_url:
+            document_url_list = [url.strip() for url in document_url.split(',')]
+            document_ids_to_keep = []
+
+            # Update documents
+            for url in document_url_list:
+                # Check if the document URL already exists
+                document = LectureDocument.query.filter_by(document_path=url, lecture_id=lecture.id).first()
+                if not document:
+                    document = LectureDocument(document_path=url, lecture=lecture)  # Associate document with lecture
+                    db.session.add(document)
+                document_ids_to_keep.append(document.id)  # Keep track of existing documents
+
+            # Remove documents that are no longer associated
+            for document in lecture.documents:
+                if document.id not in document_ids_to_keep:
+                    db.session.delete(document)
+
+        db.session.commit()
+        flash('lecture created successfully.')
 
         # Commit changes to the database
         db.session.commit()

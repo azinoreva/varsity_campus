@@ -34,20 +34,38 @@
             <div class="input-group-append">
                 <button type="button" id="addStudentBtn" class="btn btn-primary mt-2">Add Student</button>
             </div>
+            <input type="hidden" id="studentEmails" name="studentEmails" value="{% for student in lecture.students %}{{ student.email }}{% if not loop.last %},{% endif %}{% endfor %}">
         </div>
 
         <h2>add resources</h2>
+         <!-- add video url -->
+         <div class="form-group">
+            <label for="videoUrlInput">Video URL:</label>
+            <input type="url" id="videoUrlInput" class="form-control">
+            <ul id="videoList" class="list-group mb-3"><!-- Display added students --></ul>
+            <div class="input-group-append">
+                <button type="button" id="addVideoBtn" class="btn btn-primary mt-2">save</button>
+            </div>
+            <input type="hidden" id="video_url" name="video_url" value="{% for video in lecture.videos %}{{ video.video_url }}{% if not loop.last %},{% endif %}{% endfor %}">
+        </div>
+
         <div class="form-group">
-            <label for="video_url">Video URL</label>
-            <input type="url" name="video_url" id="video_url" class="form-control">
+            <label for="documentUrlInput">Document URL:</label>
+            <input type="url" id="documentUrlInput" class="form-control">
+            <ul id="documentList" class="list-group mb-3"><!-- Display added students --></ul>
+            <div class="input-group-append">
+                <button type="button" id="addDocxBtn" class="btn btn-primary mt-2">save</button>
+            </div>
+            <input type="hidden" id="document_url" name="document_url" value="{% for docx in lecture.documents %}{{ docx.document_path }}{% if not loop.last %},{% endif %}{% endfor %}">
         </div>
 
-        <div class="form-gropu">
-            <label for="">Document Path</label>
-            <input type="file" name="document_path" id="document_path" class="form-control">
+
+       
+
+        <div>
+            <a href="{{ url_for('lectures.create_assignment') }}">add assignment</a>
         </div>
 
-        <input type="hidden" id="studentEmails" name="studentEmails" value="{% for student in lecture.students %}{{ student.email }}{% if not loop.last %},{% endif %}{% endfor %}">
         <div>
             <button type="submit" class="btn btn-success">create lecture</button>
         </div>
