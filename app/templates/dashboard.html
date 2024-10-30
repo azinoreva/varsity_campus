@@ -52,8 +52,7 @@
         {% for post in posts %}
         <div class="col-md-4">
             <div class="card mb-3">
-                <div class="card-body">
-                    <h5 class="card-title text-danger">Post {{ loop.index }}</h5>  <!-- Changed title to a generic label since Post has no title field -->
+                <div class="card-body profile-posts">
                     <p class="card-text">{{ post.text }}</p>
                     {% if post.image %}
                         <img src="{{ url_for('static', filename='images/' + post.image) }}" alt="Post Image" class="img-fluid">
