@@ -3,16 +3,18 @@
 {% block title %}Communities{% endblock %}
 
 {% block content %}
-<h1 class="heading">Communities</h1>
-<ul class="list-group" id="list-group">
-    {% for community in communities %}
-    {% if community %}
-    <li class="list-group-item">
-        <a href="{{ url_for('community.view_community_detail', community_id=community.id) }}">{{ community.name }}</a>
-    </li>
-    {% else %}
-    <h2>No active community</h2>
-    {% endif %}
-    {% endfor %}
-</ul>
+<div class="communities-wrapper">
+    <h1 class="heading" id="heading">Communities</h1>
+    <ul class="list-group communities-list" id="list-group">
+        {% for community in communities %}
+        {% if community %}
+        <li class="communities-item">
+            <a class="btn btn-primary btn-color" href="{{ url_for('community.view_community_detail', community_id=community.id) }}">{{ community.name }}</a>
+        </li>
+        {% else %}
+        <h2>No active community</h2>
+        {% endif %}
+        {% endfor %}
+    </ul>
+</div>
 {% endblock %}
