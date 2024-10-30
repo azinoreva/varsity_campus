@@ -285,8 +285,13 @@ P {
 }
 
 .community-message-wrapper {
-    margin-bottom: 15px !important;
-    padding: 0px !important;
+    margin: 15px !important;
+    margin-left: 5px !important;
+    padding: 5px !important;
+    box-shadow: 0px 0px 10px #333;
+    border-radius: 20px;
+    width: auto !important;
+    /* max-width: 60% !important; */
 }
 
 .post-wrapper {
@@ -568,7 +573,7 @@ P {
 
 .message {
     list-style: none;
-    max-width: 60%;
+    max-width: 60% !important;
     padding: 10px 15px;
     border-radius: 20px;
     font-size: 16px;
