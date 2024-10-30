@@ -1,3 +1,4 @@
+// handle assignment questions input
 document.addEventListener('DOMContentLoaded', () => {
     // Function to update the hidden input field with current items
     function updateHiddenInput(hiddenInputId, items) {

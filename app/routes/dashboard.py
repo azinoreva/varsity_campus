@@ -53,6 +53,7 @@ def add_friend(friend_id):
 
     return redirect(url_for('dashboard.profile', user_id=friend_id))
 
+
 # display all the friends a user has
 @login_required
 @dashboard_bp.route('/friends', methods=['GET'])

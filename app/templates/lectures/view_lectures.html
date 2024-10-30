@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %} {% endblock %}
+{% block title %} view lecture {% endblock %}
 
 {% block navigation %}
 <div class="darkmodeToggle" id="darkmodeToggle">
@@ -45,18 +45,23 @@
 {% endblock%}
 
 {% block content %}
+<!-- create a new lecture -->
 <a href="{{ url_for('lectures.create_lecture') }}"><i class="fa fa-plus fa-2x" aria-hidden="true"></i></a>
 
 <ul class="list-group">
+    <!-- lecture title and discription -->
     {% for lecture in lectures %}
     <li class="list-group-item">
         <strong>{{ lecture.title }}</strong>
         <p>{{ lecture.description }}</p>
 
         <div class="d-flex align-items-center gap-3">
+            <!-- assignment page -->
             <a href="{{ url_for('assignment.view_assignment', lecture_id=lecture.id) }}"><i class="fa fa-plus" aria-hidden="true"></i>assignment</a>
+            <!-- edit lecture -->
             <a href="{{ url_for('lectures.edit_lecture', lecture_id=lecture.id) }}"><i class="fas fa-pen"></i></a>
 
+        <!-- delete lectures -->
         <form id="deleteForm" action="{{ url_for('lectures.delete_lecture', lecture_id=lecture.id) }}" method="post" onsubmit="return confirmDelete();">
             <input type="hidden" name="lecture_id" value="{{ lecture_id }}">
             <button type="submit" class="btn border-0"><i class="fas fa-trash-alt"></i></button>

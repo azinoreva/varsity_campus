@@ -1,14 +1,16 @@
 {% extends 'base.html' %}
 
-{% block title %} {% endblock %}
+{% block title %} view library item {% endblock %}
 
 {% block navigation %}
 <a href="{{ url_for('library.library') }}"><i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i></a>
 {% endblock %}
 
 {% block content %}
+<!-- display book details -->
 <h1>{{ item.title }}</h1>
 <p>{{ item.description }}</p>
+<!-- preview book -->
 {% if item.file_path %}
     <div class="embeded-pdf">
         <embed src="{{ url_for('static', filename='media/' + item.file_path) }}" width="100%" height="100%" type="application/pdf">

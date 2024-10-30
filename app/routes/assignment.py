@@ -7,6 +7,7 @@ from datetime import datetime
 # Blueprint for lectures
 assignment_bp = Blueprint('assignment', __name__)
 
+# view assignments
 @assignment_bp.route('/lecture/view_assignment/<int:lecture_id>', methods=['GET'])
 @login_required
 def view_assignment(lecture_id):
@@ -14,7 +15,7 @@ def view_assignment(lecture_id):
     return render_template('lectures/assignment.html', lecture_id=lecture_id, assignments=assignments)
 
 
-
+# create new assignment
 @assignment_bp.route('/lectures/assignment/<int:lecture_id>', methods=['GET', 'POST'])
 def create_assignment(lecture_id):
     # Ensure the user is a lecturer

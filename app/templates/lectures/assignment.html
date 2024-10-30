@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 
-{% block title %}
-{% endblock %}
+{% block title %} assignment {% endblock %}
 
 {% block content %}
 
+<!-- show assignment questions -->
 {% if assignments %}
     {% for assignment in assignments %}
         <ul>
@@ -17,43 +17,46 @@
     <p>No assignments found for this lecture.</p>
 {% endif %}
 
-
+<!-- add assignment questions -->
 {% if current_user.has_role('Lecturer') %}
 <div>
     <form action="{{ url_for('assignment.create_assignment', lecture_id=lecture_id) }}" method="POST">
         <div class="form-group">
+            <!-- input assignment question -->
             <label for="questionsInput">Question:</label>
             <input type="text" id="questionsInput" class="form-control">
-
+            <!-- display assignment questions -->
             <ul id="questionList" class="list-group mb-3"><!-- Display added students --></ul>
-
+            <!-- get assignment questions -->
             <div class="input-group-append">
                 <button type="button" id="addQuestionBtn" class="btn btn-primary mt-2">save</button>
             </div>
-
+            <!-- store questions -->
             <input type="hidden" id="questions" name="questions" value="">
         </div>
-
+        <!-- submit question -->
         <div>
             <button type="submit" class="btn btn-success">upload</button>
         </div>
     </form>
 </div>
 {% else %}
+<!-- answer assignment questions -->
 <form action="{{ url_for('assignment.create_assignment', lecture_id=lecture_id) }}" method="POST">
     <div class="form-group">
+        <!-- inpur assignment answer -->
         <label for="answerInput">Answer:</label>
         <input type="url" id="answerInput" class="form-control">
-
+        <!-- display assignment answer -->
         <ul id="answerList" class="list-group mb-3"><!-- Display added students --></ul>
-
+        <!-- get assignment answer -->
         <div class="input-group-append">
             <button type="button" id="answerBtn" class="btn btn-primary mt-2">save</button>
         </div>
-
+        <!-- store assignment asnswer -->
         <input type="hidden" id="answer" name="answer" value="">
     </div>
-
+    <!-- submit assignment -->
     <div>
         <button type="submit" class="btn btn-primary mt-2">submit</button>
     </div>

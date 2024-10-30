@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %} {% endblock %}
+{% block title %} comment {% endblock %}
 
 {% block navigation %}
 <!-- empty navigation -->
@@ -20,6 +20,7 @@
         {% endif %} -->
 
         <div>
+            <!-- display list of comments -->
             <ul class="list-group comments-container">
                 {% for comment in comments %}
                 <li class="comment-item">
@@ -35,6 +36,7 @@
             
         </div>
     </div>
+    <!-- add new post -->
     <form class="add-comment" action="{{ url_for('posts.comment_post', post_id=post.id) }}" method="POST">
         <textarea name="text" id="text" rows="1" placeholder="Comment..."></textarea>
         <button type="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>

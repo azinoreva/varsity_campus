@@ -19,6 +19,7 @@ def view_lectures(lecturer_id):
     lectures = Lecture.query.filter_by(lecturer_id=lecturer_id).all()
     return render_template('lectures/view_lectures.html', lectures=lectures)
 
+
 # Add a new lecture (only lecturers)
 @lectures_bp.route('/lectures/create', methods=['GET','POST'])
 @login_required
@@ -81,6 +82,7 @@ def create_lecture():
     # Render the create_lecture template if it's a GET request
     return render_template('lectures/create_lecture.html')
 
+
 # Send notification to students
 @lectures_bp.route('/lectures/<int:lecture_id>/notify', methods=['POST'])
 @login_required
@@ -94,6 +96,7 @@ def notify_students(lecture_id):
     db.session.commit()
     flash('Notification sent.')
     return redirect(url_for('lectures.view_lectures'))
+
 
 # Drop assignment for students
 @lectures_bp.route('/lectures/<int:lecture_id>/drop_assignment', methods=['POST'])

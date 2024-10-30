@@ -1,3 +1,4 @@
+// toggle post and courses
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('posts').style.display = 'block';
 })

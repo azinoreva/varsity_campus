@@ -53,19 +53,6 @@ def view_a_post(post_id):
     db.session.commit()
     return render_template('view_post.html', post=post, comments=comments)
 
-# Search for a post
-# @posts_bp.route('/post/search', methods=['GET'])
-# def search_posts():
-#     query = request.args.get('q')  
-#     if query:
-#         posts = Post.query.filter(
-#             (Post.title.ilike(f'%{query}%')) | (Post.text.ilike(f'%{query}%'))
-#         ).all()
-#         return render_template('search_results.html', posts=posts)
-#     else:
-#         flash("Please enter a search term.", "warning")
-#         return redirect(url_for('posts.view_posts'))
-
 @posts_bp.route('/posts', methods=['GET'])
 @login_required
 def view_posts():

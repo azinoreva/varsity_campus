@@ -3,7 +3,8 @@
 {% block title %} {% endblock %}
 
 {% block content %}
-<div class="d-flex justify-content-between align-items-center" style="margin-top: 50px;">
+<!-- account settings page setup -->
+<div class="d-flex justify-content-end align-items-center" style="margin-top: 50px;">
     <a href="{{ url_for('auth.account_settings') }}"><i class="fas fa-cog fa-2x"></i></a>
 </div>
 
@@ -52,7 +53,7 @@
         <div class="col-md-4">
             <div class="card mb-3">
                 <div class="card-body">
-                    <h5 class="card-title">Post {{ loop.index }}</h5>  <!-- Changed title to a generic label since Post has no title field -->
+                    <h5 class="card-title text-danger">Post {{ loop.index }}</h5>  <!-- Changed title to a generic label since Post has no title field -->
                     <p class="card-text">{{ post.text }}</p>
                     {% if post.image %}
                         <img src="{{ url_for('static', filename='images/' + post.image) }}" alt="Post Image" class="img-fluid">
@@ -82,7 +83,7 @@
         <div class="col-md-4">
             <div class="card mb-3">
                 <div class="card-body">
-                    <h5 class="card-title">{{ lecture.title }}</h5>
+                    <h5 class="card-title"><a class="text-danger text-decoration-none" href="{{ url_for('courses.course_detail', course_id=lecture.id) }}">{{ lecture.title }}</a></h5>
                     <p class="card-text">{{ lecture.description }}</p>
                     <small class="text-muted">Starts on: {{ lecture.start_date.strftime('%Y-%m-%d') if lecture.start_date else 'N/A' }}</small><br>
                     <small class="text-muted">Ends on: {{ lecture.end_date.strftime('%Y-%m-%d') if lecture.end_date else 'N/A' }}</small>
