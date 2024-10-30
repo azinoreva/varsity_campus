@@ -36,11 +36,11 @@ The following are the step by step guides to actiively work on this project.
 To run a python script you need to install python. Let's [download](https://www.python.org/) python.
 If you are a windows user. Click the link below.
 
-[![installing on Windows](./images/installing_on_windows.png)](https://www.python.org/)
+![installing on Windows](./images/installing_on_windows.png) (https://www.python.org/)
 
 If you are a macOS user. Click the link below.
 
-[![installing on Windows](./images/installing_on_macOS.png)](https://www.python.org/)
+![installing on Windows](./images/installing_on_macOS.png) (https://www.python.org/)
 
 To check if python is installed write the following command on your device terminal.
 

@@ -5,6 +5,7 @@ const offcanvasExample = document.getElementById('offcanvasExample');
 const hamburger = document.getElementById('hamburger');
 const searchBar = document.getElementById('search-bar');
 const listGroupItems = document.querySelectorAll('.list-group-item');
+const hamburgerWrapper = document.getElementById('hamburger-wrapper');
 
 const currentTheme = localStorage.getItem('theme');
 
@@ -17,6 +18,10 @@ function toggleMode() {
     darkmodeToggle.classList.toggle('dark-mode');
     hamburger.classList.toggle('dark-mode');
     offcanvasExample.classList.toggle('dark-mode');
+
+    if (hamburgerWrapper) {
+        hamburgerWrapper.classList.toggle('dark-mode');
+    }
 
     if (searchBar) {
         searchBar.classList.toggle('dark-mode');
@@ -38,15 +43,18 @@ if (darkmodeToggle) {
 }
 
 // Indicates whether a file is selected or not
-document.getElementById('image').addEventListener('change', function() {
-    const icon = document.getElementById('attach-icon');
+const image = document.getElementById('image');
+if (image) {
+    image.addEventListener('change', function() {
+        const icon = document.getElementById('attach-icon');
 
-    if (this.files.length > 0) {
-        icon.classList.toggle('file-selected');
-    } else {
-        icon.classList.remove('file-selected');
-    }
-})
+        if (this.files.length > 0) {
+            icon.classList.toggle('file-selected');
+        } else {
+            icon.classList.remove('file-selected');
+        }
+    })
+}
 
 // document.getElementById('message-file').addEventListener('change', function() {
 //     const icon = document.getElementById('message-attach-icon');

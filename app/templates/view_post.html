@@ -23,7 +23,7 @@
             <ul class="list-group comments-container">
                 {% for comment in comments %}
                 <li class="comment-item">
-                    <strong id="username">{{ comment.user.username }}</strong>
+                    <strong><a class="comment-username" id="username" href="{{ url_for('dashboard.profile', user_id=comment.user.id) }}">{{ comment.user.username }}</a></strong>
                     <p id="comment-text">{{ comment.text }}</p>
                     <small id="time">{{ comment.timestamp.strftime('%H:%M') }}</small>
                 </li>
