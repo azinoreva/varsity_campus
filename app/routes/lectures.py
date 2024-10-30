@@ -4,7 +4,7 @@ from flask import Blueprint, request, render_template, redirect, url_for, flash
 from flask_login import login_required, current_user
 from .. import db
 from ..models import Lecture, User, LectureVideo, LectureDocument, Assignment, lecture_students
-from ..utils import save_file
+from datetime import datetime
 
 # Blueprint for lectures
 lectures_bp = Blueprint('lectures', __name__)
@@ -32,10 +32,11 @@ def create_lecture():
         title = request.form['title']
         description = request.form['description']
         student_emails = request.form['studentEmails']
-        
-        
+        notes = request.form['notes']
+        start_date = datetime.strptime(request.form['start_date'], '%Y-%m-%d')
+        end_date = datetime.strptime(request.form['end_date'], '%Y-%m-%d')
 
-        new_lecture = Lecture(title=title, description=description, lecturer_id=current_user.id)
+        new_lecture = Lecture(title=title, description=description, lecturer_id=current_user.id, notes=notes, start_date=start_date, end_date=end_date)
         db.session.add(new_lecture)
         db.session.commit()
 
@@ -80,50 +81,6 @@ def create_lecture():
     # Render the create_lecture template if it's a GET request
     return render_template('lectures/create_lecture.html')
 
-@lectures_bp.route('/lecture/view_assignment/<int:lecturer_id>', methods=['GET'])
-@login_required
-def view_assignment(lecturer_id):
-    if not current_user.has_role('Lecturer'):
-        flash('Only lecturers can view this page.')
-        return redirect(url_for('home.home'))
-
-    assignments = Assignment.query.filter_by(lecturer_id=lecturer_id).all()
-    return render_template('lectures/assignment.html', assignments=assignments)
-
-
-
-@lectures_bp.route('/lectures/assignment', methods=['GET', 'POST'])
-@login_required
-def create_assignment():
-    if not current_user.has_role('Lecturer'):
-        flash('Only lecturers can view this page.')
-        return redirect(url_for('home.home'))
-    
-    lectures = Lecture.query.all()  # Use plural 'lectures' for clarity
-    students = User.query.all()  # Use plural 'students' for clarity
-
-    # Check if there are lectures available
-    if lectures:
-        lecture_id = lectures[0].id  # Use the first lecture's ID
-    else:
-        lecture_id = None  # Handle case where there are no lectures
-
-    # Check if there are students available
-    if students:
-        student_id = students[0].id  # Use the first student's ID
-    else:
-        student_id = None  # Handle case where there are no students
-
-    if request.method == 'POST':
-        questions = request.form["questions"]
-
-        asignments = Assignment(questions=questions,lecture_id=lecture_id, student_id=student_id)
-        db.add(asignments)
-        db.commit()
-        return redirect(url_for('lectures.view_assignment', lecturer_id=lectures.lecturer_id))
-
-    return render_template('lectures/assignment.html')
-
 # Send notification to students
 @lectures_bp.route('/lectures/<int:lecture_id>/notify', methods=['POST'])
 @login_required
@@ -152,14 +109,13 @@ def drop_assignment(lecture_id):
     flash('Assignment dropped.')
     return redirect(url_for('lectures.view_lectures'))
 
-from flask import abort
 
 @lectures_bp.route('/lectures/edit/<int:lecture_id>', methods=['GET', 'POST'])
 def edit_lecture(lecture_id):
     # Ensure only lecturers can edit a lecture
     if not current_user.has_role('Lecturer'):
         flash('Only lecturers can edit lectures.')
-        return redirect(url_for('home'))
+        return redirect(url_for('home.home'))
 
     # Fetch the lecture by ID
     lecture = Lecture.query.get_or_404(lecture_id)
@@ -168,9 +124,12 @@ def edit_lecture(lecture_id):
         # Update the lecture's title and description
         lecture.title = request.form['title']
         lecture.description = request.form['description']
-        video_url = request.form['video_url']
-        document_url = request.form['document_url']
-        
+        lecture.video_url = request.form['video_url']
+        lecture.document_url = request.form['document_url']
+        lecture.notes = request.form['notes']
+        lecture.start_date = datetime.strptime(request.form['start_date'], '%Y-%m-%d')
+        lecture.end_date = datetime.strptime(request.form['end_date'], '%Y-%m-%d')
+
         # Update student associations if emails are provided
         student_emails = request.form.get('studentEmails')
         if student_emails:
@@ -196,8 +155,8 @@ def edit_lecture(lecture_id):
                 ~lecture_students.c.student_id.in_(lecture_students_to_keep)
             ).delete(synchronize_session=False)
 
-        if video_url:
-            video_url_list = [url.strip() for url in video_url.split(',')]
+        if lecture.video_url:
+            video_url_list = [url.strip() for url in lecture.video_url.split(',')]
             video_ids_to_keep = []
 
             # Update videos
@@ -214,8 +173,8 @@ def edit_lecture(lecture_id):
                 if video.id not in video_ids_to_keep:
                     db.session.delete(video)
 
-        if document_url:
-            document_url_list = [url.strip() for url in document_url.split(',')]
+        if lecture.document_url:
+            document_url_list = [url.strip() for url in lecture.document_url.split(',')]
             document_ids_to_keep = []
 
             # Update documents
@@ -231,9 +190,6 @@ def edit_lecture(lecture_id):
             for document in lecture.documents:
                 if document.id not in document_ids_to_keep:
                     db.session.delete(document)
-
-        db.session.commit()
-        flash('lecture created successfully.')
 
         # Commit changes to the database
         db.session.commit()
@@ -258,6 +214,5 @@ def delete_lecture(lecture_id):
     db.session.delete(lecture)
     db.session.commit()
     
-    lectures = Lecture.query.all()
     flash('Lecture deleted successfully.')
     return redirect(url_for('lectures.view_lectures', lecturer_id=current_user.id))

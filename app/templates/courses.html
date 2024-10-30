@@ -7,15 +7,13 @@
     <input type="text" class="" id="search-bar" placeholder="Search...">
     <span class="search-icon">🔍</span>
 </div>
-<h1>Your Courses</h1>
+
+<h1>Your courses</h1>
 <ul class="list-group">
     {% for lecture in lectures %}
-        {% if current_user in lecture.students %}
         <li class="list-group-item">
             <a href="{{ url_for('courses.course_detail', course_id=lecture.id) }}">{{ lecture.title }}</a>
         </li>
-        {% endif %}
-    
     {% endfor %}
 </ul>
 {% endblock %}

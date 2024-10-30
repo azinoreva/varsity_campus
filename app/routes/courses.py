@@ -15,15 +15,18 @@ courses_bp = Blueprint('courses', __name__)
 @login_required
 def view_courses():
     # Get all courses for the current student
-
     lectures = Lecture.query.filter(Lecture.students.any(id=current_user.id)).all()
-    courses = Course.query.filter_by(student_id=current_user.id).all()
-    return render_template('courses.html', courses=courses, lectures=lectures)
+    return render_template('courses.html', lectures=lectures)
 
 @courses_bp.route('/course/<int:course_id>/detail', methods=['GET'])
 @login_required
 def course_detail(course_id):
-    return render_template('view_courses.html')
+    # Find the specific lecture by ID and check if the current user is enrolled
+    lecture = Lecture.query.filter(
+        Lecture.id == course_id,
+        Lecture.students.any(id=current_user.id)
+    ).first_or_404()
+    return render_template('view_courses.html', lecture=lecture)
 
 # Mark assignment as done
 @courses_bp.route('/course/<int:course_id>/mark_done', methods=['POST'])

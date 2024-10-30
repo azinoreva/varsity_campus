@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, url_for, request, redirect, current_app, flash
 from flask_login import login_required, current_user
 import os
-from ..models import User, friends
+from ..models import User, friends, Post, Lecture
 from ..utils import save_image, delete_file
 from .. import db
 
@@ -33,7 +33,10 @@ def profile(user_id):
         flash('profile updated successfully', 'success')
         redirect(url_for('dashboard.profile', user_id=user.id, current_user=current_user))
 
-    return render_template('dashboard.html', user=user)
+    posts = Post.query.filter_by(user_id=user.id).all()  # Get all posts by the user
+    lectures = Lecture.query.filter(Lecture.students.any(id=user.id)).all()
+
+    return render_template('dashboard.html', user=user, posts=posts, lectures=lectures)
 
 # handles adding another user as a friend
 @login_required

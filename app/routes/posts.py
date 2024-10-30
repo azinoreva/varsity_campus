@@ -100,11 +100,11 @@ def repost(post_id):
     return redirect(url_for('posts.view_post', post_id=post_id))
 
 # Delete a post
-@posts_bp.route('/delete_post/<int:post_id>')
+@posts_bp.route('/delete_post/<int:post_id>', methods=['DELETE', 'POST'])
 @login_required
 def delete_post(post_id):
     post = Post.query.get_or_404(post_id)
     db.session.delete(post)
     db.session.commit()
     flash('Post deleted successfully', 'success')
-    return redirect(url_for('profile', user_id=post.user_id))
+    return redirect(url_for('dashboard.profile', user_id=current_user.id))

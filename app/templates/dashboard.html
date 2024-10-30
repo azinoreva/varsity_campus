@@ -8,15 +8,16 @@
     <a href="{{ url_for('auth.account_settings') }}"><i class="fas fa-cog fa-2x"></i></a>
 </div>
 
-
+<!-- profile picture  -->
 <div class="d-flex justify-content-center align-items-center" style="height: 200px;;">
     {% if user.profile_image %}
     <img src="{{ url_for('static', filename='images/' + user.profile_image) }}" class="rounded-circle" style="width: 150px; height: 150px; border:3px solid red;">
     {% else %}
-    <p> no profile picure </p>
+    <img src="{{ url_for('static', filename='images/default-profile-pic.jpg') }}" class="rounded-circle" style="width: 150px; height: 150px; border:3px solid red;">
 {% endif %}
 </div>
 
+<!-- user information -->
 <div class="d-flex flex-column justify-content-center align-items-center">
     <h3>{{ user.username|capitalize }} </h3>
     <small>{{ user.bio }}</small>
@@ -24,7 +25,7 @@
     <p>{{ user.roles.users }}</p>
 </div>
 
-
+<!-- handle user friends -->
 {% if current_user != user %}  <!-- Check if the logged-in user is not the same as the viewed user -->
     {% if current_user.friends.filter_by(id=user.id).first() %}
         <form method="POST">
@@ -37,6 +38,66 @@
     {% endif %}
 {% endif %}
 
-<a href="{{ url_for('dashboard.friend') }}">friends</a>
+<!-- dashboard nav tool -->
+<div class="d-flex align-items-center justify-content-center gap-5 mb-3">
+    <button class="btn btn-dark"><a class="dark text-light text-decoration-none" href="{{ url_for('dashboard.friend') }}">friends</a></button>
+    <button class="btn btn-primary" id="show-courses">Show Courses</button>
+    <button class="btn btn-secondary" id="show-posts">Show Posts</button>
+</div>
 
+<!-- dashboard grid -->
+<div id="posts" class="collapse">
+    <h2>Your Posts</h2>
+    <div class="row">
+        {% for post in posts %}
+        <div class="col-md-4">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Post {{ loop.index }}</h5>  <!-- Changed title to a generic label since Post has no title field -->
+                    <p class="card-text">{{ post.text }}</p>
+                    {% if post.image %}
+                        <img src="{{ url_for('static', filename='images/' + post.image) }}" alt="Post Image" class="img-fluid">
+                    {% endif %}
+                    <div class="d-flex align-items-center justify-content-between">
+
+                        <small class="text-muted">Posted on {{ post.timestamp.strftime('%Y-%m-%d %H:%M') }}</small>
+                        <!-- add delete post button -->
+                        <form id="deleteForm" action="{{ url_for('posts.delete_post', post_id=post.id) }}" method="post" onsubmit="return confirmDelete();">
+                            <input type="hidden" name="lecture_id" value="{{ lecture_id }}">
+                            <button type="submit" class="btn border-0"><i class="fas fa-trash-alt"></i></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+            <p>No posts available.</p>  <!-- Message if no posts exist -->
+        {% endfor %}
+    </div>
+</div>
+
+<div id="courses" class="collapse">
+    <h2>Your Courses</h2>
+    <div class="row">
+        {% for lecture in lectures %}  <!-- Changed variable from 'course' to 'lecture' -->
+        <div class="col-md-4">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">{{ lecture.title }}</h5>
+                    <p class="card-text">{{ lecture.description }}</p>
+                    <small class="text-muted">Starts on: {{ lecture.start_date.strftime('%Y-%m-%d') if lecture.start_date else 'N/A' }}</small><br>
+                    <small class="text-muted">Ends on: {{ lecture.end_date.strftime('%Y-%m-%d') if lecture.end_date else 'N/A' }}</small>
+                </div>
+            </div>
+        </div>
+        {% else %}
+            <p>No courses available.</p>  <!-- Message if no lectures exist -->
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+<!-- script -->
+{% block script %}
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
 {% endblock %}

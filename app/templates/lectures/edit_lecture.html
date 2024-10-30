@@ -21,6 +21,20 @@
                 <label for="">Description</label>
                 <input type="text" name="description" value="{{ lecture.description }}" class="form-control">
             </div>
+            <!-- Start and End Dates -->
+            <div class="form-group">
+                <label for="start_date">Start Date</label>
+                <input type="date" name="start_date" class="form-control" id="start_date" value="{{ lecture.start_date }}">
+            </div>
+            <div class="form-group">
+                <label for="end_date">End Date</label>
+                <input type="date" name="end_date" class="form-control" id="end_date" value="{{ lecture.end_date }}">
+            </div>
+            <!-- add note -->
+            <div class="form-group">
+                <label for="notes">Notes</label>
+                <textarea name="notes" rows="10" cols="50" class="form-control" placeholder="Write your note here" id="notes" value="{{ lecture.notes }}"></textarea>
+            </div>
         </div>
 
         <h2>Edit Students</h2>
@@ -28,7 +42,7 @@
            <!-- display list of student's email -->
         </ul>
 
-        <div>
+        <div class="form-group">
             <label for="">student email:</label>
             <input type="email" id="studentEmailInput" class="form-control">
             <div class="input-group-append">
@@ -38,20 +52,21 @@
         </div>
 
         <h2>add resources</h2>
+        <ul id="videoList" class="list-group mb-3"><!-- Display added students --></ul>
          <!-- add video url -->
          <div class="form-group">
             <label for="videoUrlInput">Video URL:</label>
             <input type="url" id="videoUrlInput" class="form-control">
-            <ul id="videoList" class="list-group mb-3"><!-- Display added students --></ul>
+            
             <div class="input-group-append">
                 <button type="button" id="addVideoBtn" class="btn btn-primary mt-2">save</button>
             </div>
             <input type="hidden" id="video_url" name="video_url" value="{% for video in lecture.videos %}{{ video.video_url }}{% if not loop.last %},{% endif %}{% endfor %}">
         </div>
 
+        <input type="url" id="documentUrlInput" class="form-control">
         <div class="form-group">
             <label for="documentUrlInput">Document URL:</label>
-            <input type="url" id="documentUrlInput" class="form-control">
             <ul id="documentList" class="list-group mb-3"><!-- Display added students --></ul>
             <div class="input-group-append">
                 <button type="button" id="addDocxBtn" class="btn btn-primary mt-2">save</button>
@@ -59,11 +74,8 @@
             <input type="hidden" id="document_url" name="document_url" value="{% for docx in lecture.documents %}{{ docx.document_path }}{% if not loop.last %},{% endif %}{% endfor %}">
         </div>
 
-
-       
-
         <div>
-            <a href="{{ url_for('lectures.create_assignment') }}">add assignment</a>
+            <a href="{{ url_for('assignment.create_assignment', lecture_id=lecture.id) }}"><i class="fa fa-plus" aria-hidden="true"></i>assignment</a>
         </div>
 
         <div>

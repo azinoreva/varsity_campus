@@ -2,10 +2,41 @@
 {% block title %}{% endblock%}
 
 {% block content %}
-<h1>course details</h1>
-{% for lecture in lectures %}
 <h1>{{ lecture.title }}</h1>
+<p>{{ lecture.discription }}</p>
+<p>start date: {{ lecture.start_date }}</p>
+<p>end date: {{ lecture.end_date }}</p>
 
+<div>
+    <h1>Note</h1>
+    <div>{{ lecture.notes }}</div>
+</div>
 
-{% endfor %}
+<h3>Videos</h3>
+{% if lecture.videos %}
+    <ul>
+    {% for video in lecture.videos %}
+        <li><a href="{{ video.video_url }}" target="_blank">{{ video.video_url }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No videos available.</p>
+{% endif %}
+
+<!-- Display associated documents -->
+<h3>Documents</h3>
+{% if lecture.documents %}
+    <ul>
+    {% for document in lecture.documents %}
+        <li><a href="{{ document.document_path }}" target="_blank">{{ document.document_path }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No documents available.</p>
+{% endif %}
+
+<div>
+    <a href="{{ url_for('assignment.view_assignment', lecture_id=lecture.id) }}">assignment</a>
+</div>
+
 {% endblock %}

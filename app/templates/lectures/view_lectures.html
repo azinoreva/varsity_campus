@@ -54,12 +54,12 @@
         <p>{{ lecture.description }}</p>
 
         <div class="d-flex align-items-center gap-3">
-            <a href="{{ url_for('lectures.view_assignment', lecturer_id=lecture.lecturer_id) }}">assignment</a>
-            <a href="{{ url_for('lectures.edit_lecture', lecture_id=lecture.id) }}">edit</a>
+            <a href="{{ url_for('assignment.view_assignment', lecture_id=lecture.id) }}"><i class="fa fa-plus" aria-hidden="true"></i>assignment</a>
+            <a href="{{ url_for('lectures.edit_lecture', lecture_id=lecture.id) }}"><i class="fas fa-pen"></i></a>
 
         <form id="deleteForm" action="{{ url_for('lectures.delete_lecture', lecture_id=lecture.id) }}" method="post" onsubmit="return confirmDelete();">
             <input type="hidden" name="lecture_id" value="{{ lecture_id }}">
-            <button type="submit">Delete</button>
+            <button type="submit" class="btn border-0"><i class="fas fa-trash-alt"></i></button>
         </form>
         </div>
 

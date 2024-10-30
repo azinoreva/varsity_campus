@@ -24,11 +24,11 @@ class Lecture(db.Model):
                              secondary='lecture_students',
                              backref='lectures')  # Students in the lecture
   videos = db.relationship('LectureVideo', backref='lecture',
-                           lazy=True)  # Videos related to lecture
+                           lazy=True, cascade='all, delete-orphan')  # Videos related to lecture
   documents = db.relationship('LectureDocument', backref='lecture',
-                              lazy=True)  # Documents related to lecture
+                              lazy=True, cascade='all, delete-orphan')  # Documents related to lecture
   assignments = db.relationship('Assignment', backref='lecture',
-                                lazy=True)  # Assignments
+                                lazy=True, cascade="all, delete-orphan")  # Assignments
   notifications = db.relationship('Notification', backref='lecture',
                                   lazy=True)  # Notifications
 
@@ -82,18 +82,20 @@ class Notification(db.Model):
 
 # Assignment Model
 class Assignment(db.Model):
-  __tablename__ = 'assignments'
+    __tablename__ = 'assignments'
 
-  id = db.Column(db.Integer, primary_key=True)
-  description = db.Column(db.String(255), nullable=True)  # Assignment details
-  content = db.Column(db.String(5000), nullable=True)
-  due_date = db.Column(db.DateTime, nullable=False)
-  lecture_id = db.Column(db.Integer,
-                         db.ForeignKey('lectures.id'),
-                         nullable=False)
-  student_id = db.Column(db.Integer,
-                         db.ForeignKey('users.id'),
-                         nullable=False)
-  lecturer_id = db.Column(db.Integer,
-                         db.ForeignKey('users.id'),
-                         nullable=False)
+    id = db.Column(db.Integer, primary_key=True)
+    description = db.Column(db.String(255), nullable=True)  # Assignment details
+    content = db.Column(db.String(5000), nullable=True)
+    due_date = db.Column(db.DateTime, nullable=False)
+    lecture_id = db.Column(db.Integer, db.ForeignKey('lectures.id'), nullable=False)
+    lecturer_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+
+    # Many-to-many relationship with students
+    students = db.relationship('User', secondary='student_assignments', backref='assignments')
+
+# Association table for student and assignment
+student_assignments = db.Table('student_assignments',
+    db.Column('student_id', db.Integer, db.ForeignKey('users.id'), primary_key=True),
+    db.Column('assignment_id', db.Integer, db.ForeignKey('assignments.id'), primary_key=True)
+)
