@@ -105,7 +105,11 @@ We welcome contributions from you to enhance the **MiniCampus** if you wish to c
 
 
 ## Usage
-    **Register page**
-      *Purpose:* This create a new user account to access the website.
+**Register page**
+        *Purpose:* This create a new user account to access the website.
       This will allow you enter your registered email and password on the login page.
 <img src="register.jpg" alt="register page" width="500" height="600">
+
+**Login paage**
+        *purpose:* This allows you to access your personal account
+
