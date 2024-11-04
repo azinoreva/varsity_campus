@@ -108,7 +108,7 @@ We welcome contributions from you to enhance the **MiniCampus** if you wish to c
 **Register page**
         *Purpose:* This create a new user account to access the website.
       This will allow you enter your registered email and password on the login page.
-<img src="register.jpg" alt="register page" width="500" height="600">
+      ![Register.jpg](https://github.com/azinoreva/varsity_campus/raw/main/register.jpg)
 
 **Login paage**
         *purpose:* This allows you to access your personal account
