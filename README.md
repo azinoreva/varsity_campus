@@ -2,12 +2,13 @@
 **You are gladly welcome** for deciding to contribute in this project. Your idears and creativity are highly welcome.
 
 ## PROJECT OVERVIEW:
-MiniCampus is a social and educational website meant for university students and the school community. The aim of the website is to provide a platform where students can learn and socialize all in one place. It comes with features like: 
-Posts - where you can post content related to academics and your fellow students can comment like and repost.
-Communities - here you can join a community and post messages related to it.
-Courses - this is where you can find all your courses and assignments.
-Messages - whereby you can add friends and message them.
-Library - in here, lecturers and students can upload resources that pertain to academics.
+MiniCampus is a social and educational website meant for university students and the school community. The aim of the website is to provide a platform where students can learn and socialize all in one place. It comes with features like:  
+
+* Posts - where you can post content related to academics and your fellow students can comment like and repost.  
+* Communities - here you can join a community and post messages related to it.
+* Courses - this is where you can find all your courses and assignments.
+* Messages - whereby you can add friends and message them.
+* Library - in here, lecturers and students can upload resources that pertain to academics.
 
 ## INSTALLATION:
 
