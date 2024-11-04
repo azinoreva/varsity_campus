@@ -12,29 +12,9 @@ Library - in here, lecturers and students can upload resources that pertain to a
 ## INSTALLATION:
 
 The following are the step by step guides to actiively work on this project.
-### Installing Python
-
-To run a python script you need to install python. Let's [download](https://www.python.org/) python.
-If you are a windows user. Click the link below.
-
-![installing on Windows](./images/installing_on_windows.png) (https://www.python.org/)
-
-If you are a macOS user. Click the link below.
-
-![installing on Windows](./images/installing_on_macOS.png) (https://www.python.org/)
-
-To check if python is installed write the following command on your device terminal.
-
+**Note:** make sure *Python* is installed on your machine. Do this to check if it is installed;
 ```shell
-python --version
-```
-
-![Python Version](./images/python_versio.png)
-
-**Note**: After installing the latest version of the python, then;
-```shell
-* **clone the repository**:$ git clone https://{*YOUR_ACCESS_TOKEN*}/{*YOUR_USERNAME}/varsity_campus.git.
-$ cd varsity_campus
+$ python --version
 ```
 ### Create an environment
 ```shell
